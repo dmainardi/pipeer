@@ -3,6 +3,7 @@
                 xmlns:bnu="http://bootsfaces.net/ui">
     <bnu:navbarLinks pull="right">
         <bnu:navLink value="#{msg.signUp}" outcome="/createUser" rendered="#{authenticator.loggedUser == null}" iconAwesome="user-plus"/>
+        <bnu:navLink value="#{msg.signIn}" outcome="/secured/welcome" rendered="#{authenticator.loggedUser == null}" iconAwesome="sign-in"/>
         <bnu:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
             <bnu:navLink rendered="#{authenticator.loggedUserAdmin}" value="#{msg.manageUsers}" outcome="/secured/manageUser/users" iconAwesome="users"/>
             <bnu:navLink value="#{msg.changePassword}" outcome="/secured/manageUser/changePassword" iconAwesome="key"/>
