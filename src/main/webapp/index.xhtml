@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="template/basic.xhtml">
+        <ui:define name="content">
+            <b:jumbotron>
+                <h1>PipeeR</h1>
+                <p>#{msg.pipeer_tip}</p>
+                <p><a href="https://github.com/dmainardi/pipeer" class="btn btn-lg btn-info">#{msg.index_viewProjectSource}</a></p>
+            </b:jumbotron>
+            <b:row>
+                <b:column col-md="4">
+                    <h2>#{msg.index_freeSoftware}</h2>
+                    <p>#{msg.index_freeSoftware_tip}</p>
+                    <p><a href="https://www.gnu.org/licenses/gpl-3.0.html" class="btn btn-default">#{msg.index_viewDetails}</a></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>#{msg.index_simpleNotPoor}</h2>
+                    <p>#{msg.index_simpleNotPoor_tip}</p>
+                    <p><a href="http://www.bootsfaces.net/" class="btn btn-default">#{msg.index_viewDetails}</a></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>#{msg.index_costantDevelopment}</h2>
+                    <p>#{msg.index_costantDevelopment_tip}</p>
+                    <p><a href="https://github.com/dmainardi/pipeer/commits" class="btn btn-default">#{msg.index_viewDetails}</a></p>
+                </b:column>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>

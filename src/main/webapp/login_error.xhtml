@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="pageTitle">#{msg.failedAuth}</ui:define>
+        <ui:define name="content">
+            <bnu:panel look="danger" collapsible="false">
+                <f:facet name="heading">
+                    <div class="page-header">
+                        <h1>#{msg.failedAuth}</h1>
+                    </div>
+                </f:facet>
+                <p class="lead">#{msg.failedAuth_tip}</p>
+                <p>#{msg.failedAuth_tip_contactSysAdmin}</p>
+            </bnu:panel>
+        </ui:define>
+    </ui:composition>
+</html>

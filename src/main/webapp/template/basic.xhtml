@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+        <title>PipeeR <ui:insert name='pageTitle'></ui:insert></title>
+        <meta name="author" content="Davide Mainardi"></meta>
+    </h:head>
+    <!-- Add 55px padding top and bottom to the body for the navbars -->
+    <h:body style="padding-top: 55px; padding-bottom: 55px;">
+        <h:form>
+            <b:navBar brand="PipeeR" brandHref="/pipeer" inverse="true" fixed="top">
+                <b:navbarLinks class="visible-xs">
+                    <ui:include src="sideMenu.xhtml"/>
+                </b:navbarLinks>
+                <ui:include src="topMenu.xhtml"/>
+            </b:navBar>
+        </h:form>
+        <b:container fluid="true">
+            <b:row>
+                <b:column hidden="xs" col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <ui:include src="sideMenu.xhtml"/>
+                    </b:listLinks>
+                </b:column>
+                <b:column col-sm="9" col-md="8" styleClass="main">
+                    <h:form>
+                        <p:confirmDialog global="true">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                        </p:confirmDialog>
+                    </h:form>
+                    <ui:insert name="titleAndSubtitle"/>
+                    <ui:insert name="content" />
+                </b:column>
+                <b:column col-md="2">
+                    <b:messages/>
+                </b:column>
+            </b:row>
+        </b:container>
+        <b:navBar brand="Made with &hearts; by Davide Mainardi" fixed="bottom" styleClass="hidden-sm hidden-xs">
+        </b:navBar>
+    </h:body>
+</html>

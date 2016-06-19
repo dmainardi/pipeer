@@ -1,0 +1,12 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:bnu="http://bootsfaces.net/ui">
+    <bnu:navbarLinks pull="right">
+        <bnu:navLink value="#{msg.signUp}" outcome="/createUser" rendered="#{authenticator.loggedUser == null}" iconAwesome="user-plus"/>
+        <bnu:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
+            <bnu:navLink rendered="#{authenticator.loggedUserAdmin}" value="#{msg.manageUsers}" outcome="/secured/manageUser/users" iconAwesome="users"/>
+            <bnu:navLink value="#{msg.changePassword}" outcome="/secured/manageUser/changePassword" iconAwesome="key"/>
+            <bnu:navCommandLink value="#{msg.logout}" iconAwesome="sign-out" action="#{authenticator.logout()}"/>
+        </bnu:dropMenu>
+    </bnu:navbarLinks>
+</ui:composition>
