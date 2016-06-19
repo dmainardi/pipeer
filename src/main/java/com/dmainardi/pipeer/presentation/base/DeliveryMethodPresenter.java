@@ -16,10 +16,64 @@
  */
 package com.dmainardi.pipeer.presentation.base;
 
+import com.dmainardi.pipeer.business.base.boundary.DeliveryMethodService;
+import com.dmainardi.pipeer.business.base.entity.DeliveryMethod;
+import java.io.Serializable;
+import java.util.List;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class DeliveryMethodPresenter {
+@Named
+@ViewScoped
+public class DeliveryMethodPresenter implements Serializable{
+    @Inject
+    DeliveryMethodService service;
     
+    private DeliveryMethod deliveryMethod;
+    private Long id;
+    
+    public List<DeliveryMethod> listDeliveryMethods() {
+        return service.listDeliveryMethods();
+    }
+    
+    public String saveDeliveryMethod() {
+        service.saveDeliveryMethod(deliveryMethod);
+        
+        return "/secured/base/deliveryMethods?faces-redirect=true";
+    }
+    
+    public void detailDeliveryMethod() {
+        if (id != null) {
+            if (id == 0)
+                deliveryMethod = new DeliveryMethod();
+            else
+                deliveryMethod = service.readDeliveryMethod(id);
+            id = null;
+        }
+    }
+    
+    public void deleteDeliveryMethod(DeliveryMethod deliveryMethod) {
+        service.deleteDeliveryMethod(deliveryMethod.getId());
+    }
+
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

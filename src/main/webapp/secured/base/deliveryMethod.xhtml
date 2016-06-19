@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <f:metadata>
+        <f:viewParam name="id"
+                     value="#{deliveryMethodPresenter.id}"
+                     converter="javax.faces.Long"/>
+        <f:viewAction action="#{deliveryMethodPresenter.detailDeliveryMethod()}"/>
+    </f:metadata>
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.base_deliveryMethod}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.base_deliveryMethod_tip}</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <bnu:panelGrid colSpans="3,5,4">
+                    <h:outputLabel for="iban" value="#{msg.base_deliveryMethod_name}"/>
+                    <bnu:inputText id="iban" value="#{deliveryMethodPresenter.deliveryMethod.name}"/>
+                    <bnu:message/>
+                </bnu:panelGrid>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <bnu:button value="#{msg.cancel}" outcome="/secured/base/deliveryMethods" styleClass="btn-block"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{deliveryMethodPresenter.saveDeliveryMethod()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

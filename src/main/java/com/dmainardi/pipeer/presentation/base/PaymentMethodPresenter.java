@@ -16,10 +16,64 @@
  */
 package com.dmainardi.pipeer.presentation.base;
 
+import com.dmainardi.pipeer.business.base.boundary.PaymentMethodService;
+import com.dmainardi.pipeer.business.base.entity.PaymentMethod;
+import java.io.Serializable;
+import java.util.List;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class PaymentMethodPresenter {
+@Named
+@ViewScoped
+public class PaymentMethodPresenter implements Serializable{
+    @Inject
+    PaymentMethodService service;
     
+    private PaymentMethod paymentMethod;
+    private Long id;
+    
+    public List<PaymentMethod> listPaymentMethods() {
+        return service.listPaymentMethods();
+    }
+    
+    public String savePaymentMethod() {
+        service.savePaymentMethod(paymentMethod);
+        
+        return "/secured/base/paymentMethods?faces-redirect=true";
+    }
+    
+    public void detailPaymentMethod() {
+        if (id != null) {
+            if (id == 0)
+                paymentMethod = new PaymentMethod();
+            else
+                paymentMethod = service.readPaymentMethod(id);
+            id = null;
+        }
+    }
+    
+    public void deletePaymentMethod(PaymentMethod paymentMethod) {
+        service.deletePaymentMethod(paymentMethod.getId());
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
