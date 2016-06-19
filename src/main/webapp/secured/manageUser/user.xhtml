@@ -11,9 +11,11 @@
         <ui:define name="contentSubtitle">#{msg.manageUsers_user_tip}</ui:define>
         <ui:define name="content">
             <f:metadata>
-                <f:viewParam name="id" value="#{userPresenter.userApp}" 
-                             converter="#{userConverter}" converterMessage="Unknown user, please use a link from within the system."
-                             required="true" requiredMessage="Bad request, please use a link from within the system."/>
+                <f:viewParam name="id"
+                             value="#{userPresenter.id}"
+                             required="true"
+                             requiredMessage="Bad request, please use a link from within the system."/>
+                <f:viewAction action="#{userPresenter.readUserApp()}"/>
             </f:metadata>
 
             <h:form>

@@ -21,6 +21,7 @@ import com.dmainardi.pipeer.business.user.entity.GroupApp;
 import com.dmainardi.pipeer.business.user.entity.UserApp;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,8 +38,14 @@ public class UserPresenter implements Serializable {
     UserService userService;
     
     private UserApp user;
+    private String id;
     
     private DualListModel<GroupApp> groups = new DualListModel<>();
+    
+    public void readUserApp() {
+        if (id != null && !id.isEmpty())
+            user = userService.readUserApp(id);
+    }
     
     public String saveUserApp() {
         user.getGroups().clear();
@@ -70,13 +77,23 @@ public class UserPresenter implements Serializable {
     }
 
     public DualListModel<GroupApp> getGroups() {
-        groups.setSource(userService.avaibleGroups(user));
-        groups.setTarget(user.getGroups());
+        if (groups.getSource().isEmpty() && groups.getTarget().isEmpty()) {
+            groups.setSource(userService.avaibleGroups(user));
+            groups.setTarget(user.getGroups());
+        }
         return groups;
     }
 
     public void setGroups(DualListModel<GroupApp> groups) {
         this.groups = groups;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
     
 }
