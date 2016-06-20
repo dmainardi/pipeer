@@ -4,31 +4,39 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:bnu="http://bootsfaces.net/ui">
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <f:metadata>
         <f:viewParam name="id"
-                     value="#{deliveryMethodPresenter.id}"
+                     value="#{paymentMethodPresenter.id}"
                      converter="javax.faces.Long"/>
-        <f:viewAction action="#{deliveryMethodPresenter.detailDeliveryMethod()}"/>
+        <f:viewAction action="#{paymentMethodPresenter.detailPaymentMethod()}"/>
     </f:metadata>
     <ui:composition template="/template/main.xhtml">
-        <ui:define name="contentTitle">#{msg.base_deliveryMethod}</ui:define>
-        <ui:define name="contentSubtitle">#{msg.base_deliveryMethod_tip}</ui:define>
+        <ui:define name="contentTitle">#{msg.base_paymentMethod}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.base_paymentMethod_tip}</ui:define>
         <ui:define name="content">
             <h:form>
                 <bnu:panelGrid colSpans="3,5,4">
-                    <h:outputLabel for="name" value="#{msg.base_deliveryMethod_name}"/>
-                    <bnu:inputText id="name" value="#{deliveryMethodPresenter.deliveryMethod.name}"/>
+                    <h:outputLabel for="name" value="#{msg.base_paymentMethod_name}"/>
+                    <bnu:inputText id="name" value="#{paymentMethodPresenter.paymentMethod.name}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="days" value="#{msg.base_paymentMethod_days}"/>
+                    <bnu:inputText id="days"
+                                   value="#{paymentMethodPresenter.paymentMethod.days}"
+                                   pt:type="number"
+                                   converter="javax.faces.Integer"/>
                     <bnu:message/>
                 </bnu:panelGrid>
                 <bnu:row>
                     <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
-                        <bnu:button value="#{msg.cancel}" outcome="/secured/base/deliveryMethods" styleClass="btn-block"/>
+                        <bnu:button value="#{msg.cancel}" outcome="/secured/base/paymentMethods" styleClass="btn-block"/>
                     </bnu:column>
                     <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
                         <h:commandButton
                             value="#{msg.save}"
-                            action="#{deliveryMethodPresenter.saveDeliveryMethod()}"
+                            action="#{paymentMethodPresenter.savePaymentMethod()}"
                             styleClass="btn btn-block btn-primary"/>
                     </bnu:column>
                 </bnu:row>
@@ -36,4 +44,3 @@
         </ui:define>
     </ui:composition>
 </html>
-
