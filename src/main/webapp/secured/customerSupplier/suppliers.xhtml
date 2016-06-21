@@ -1,11 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.customerSupplier_suppliers}</ui:define>
         <ui:define name="contentSubtitle">#{msg.customerSupplier_suppliers_tip}</ui:define>
         <ui:define name="content">
+            <h:form id="supplierForm">
+                <p:dataTable id="suppliersList" var="supplier" value="#{customerSupplierListPresenter.lazySuppliers}"
+                             selectionMode="multiple" selection="#{customerSupplierListPresenter.selectedCustomerSuppliers}" rowKey="#{supplier.id}"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,25,50" lazy="true">
+                    <f:facet name="header">
+                        <p:commandButton value="#{msg.delete}" actionListener="#{customerSupplierListPresenter.deleteCustomerSuppliers()}" update="@form">
+                            <p:confirm header="#{msg.customerSupplier_suppliers_delete}" message="#{msg.customerSupplier_suppliers_delete_tip}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <h:button value="#{msg.new}" styleClass="btn btn-default btn-sm" outcome="supplier">
+                            <f:param name="id" value="0" />
+                        </h:button>
+                    </f:facet>
+                    <p:column headerText="#{msg.customerSupplier_customer_businessName}" filterBy="#{supplier.businessName}" sortBy="#{supplier.businessName}" priority="4">
+                        <h:outputText value="#{supplier.businessName}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.customerSupplier_customer_name}" filterBy="#{supplier.name}" sortBy="#{supplier.name}" priority="0">
+                        <h:outputText value="#{supplier.name}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.actions}" priority="0">
+                        <h:button value="#{msg.edit}" styleClass="btn btn-default btn-sm" outcome="supplier">
+                            <f:param name="id" value="#{supplier.id}" />
+                        </h:button>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

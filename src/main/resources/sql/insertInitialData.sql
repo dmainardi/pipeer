@@ -7,3 +7,5 @@ INSERT INTO user_app(user_name, pass_word, version) VALUES('guest', 'pFCQ5Wt2Ocr
 INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('maina', 'user')
 INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('maina', 'admin')
 INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('guest', 'user')
+
+INSERT INTO customerSupplier(id, businessName, name, isCustomer, isSupplier, version) VALUES (1001, 'mainardi', 'maina', 1, 1, 0)
