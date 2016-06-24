@@ -48,7 +48,7 @@ public class Plant extends BaseEntity<Long>{
     
     private String phone;
     private String fax;
-    private String eMail;
+    private String email;
     
     @Column(nullable = false)
     private Boolean isHeadOffice;
@@ -94,14 +94,14 @@ public class Plant extends BaseEntity<Long>{
         this.fax = fax;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
+    
     public Boolean getIsHeadOffice() {
         return isHeadOffice;
     }

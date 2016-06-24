@@ -1,12 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.customerSupplier_plant}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.customerSupplier_plant_tip}</ui:define>
+        <ui:define name="content">
+            <h:form id="formPlant">
+                <bnu:panelGrid colSpans="3,5,4">
+                    <h:outputLabel for="name" value="#{msg.customerSupplier_plant_name}"/>
+                    <bnu:inputText id="name" value="#{supplierPresenter.plant.name}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="address" value="#{msg.customerSupplier_plant_address}"/>
+                    <bnu:inputTextarea id="address" value="#{supplierPresenter.plant.address}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="phone" value="#{msg.customerSupplier_plant_phone}"/>
+                    <bnu:inputText id="phone" value="#{supplierPresenter.plant.phone}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="fax" value="#{msg.customerSupplier_plant_fax}"/>
+                    <bnu:inputText id="fax" value="#{supplierPresenter.plant.fax}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="eMail" value="#{msg.customerSupplier_plant_email}"/>
+                    <bnu:inputText id="eMail" value="#{supplierPresenter.plant.email}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="isHeadOffice" value="#{msg.customerSupplier_plant_isHeadOffice}"/>
+                    <bnu:selectBooleanCheckbox id="isHeadOffice" value="#{supplierPresenter.plant.isHeadOffice}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="notes" value="#{msg.customerSupplier_plant_notes}"/>
+                    <bnu:inputTextarea id="notes" value="#{supplierPresenter.plant.notes}"/>
+                    <bnu:message/>
+                </bnu:panelGrid>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <bnu:button value="#{msg.cancel}" outcome="supplier" styleClass="btn-block"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{supplierPresenter.addPlant()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
 

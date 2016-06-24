@@ -1,12 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.customerSupplier_referee}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.customerSupplier_referee_tip}</ui:define>
+        <ui:define name="content">
+            <h:form id="formPlant">
+                <bnu:panelGrid colSpans="3,5,4">
+                    <h:outputLabel for="name" value="#{msg.customerSupplier_referee_name}"/>
+                    <bnu:inputText id="name" value="#{supplierPresenter.referee.name}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="phone" value="#{msg.customerSupplier_referee_phone}"/>
+                    <bnu:inputText id="phone" value="#{supplierPresenter.referee.phone}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="mobile" value="#{msg.customerSupplier_referee_mobile}"/>
+                    <bnu:inputText id="mobile" value="#{supplierPresenter.referee.mobile}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="eMail" value="#{msg.customerSupplier_referee_eMail}"/>
+                    <bnu:inputText id="eMail" value="#{supplierPresenter.referee.email}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="notes" value="#{msg.customerSupplier_referee_notes}"/>
+                    <bnu:inputTextarea id="notes" value="#{supplierPresenter.referee.notes}"/>
+                    <bnu:message/>
+                </bnu:panelGrid>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <bnu:button value="#{msg.cancel}" outcome="supplier" styleClass="btn-block"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{supplierPresenter.addReferee()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
 
