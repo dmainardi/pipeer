@@ -16,6 +16,9 @@
  */
 package com.dmainardi.pipeer.business.customerSupplier.entity;
 
+import com.dmainardi.pipeer.business.base.entity.Bank;
+import com.dmainardi.pipeer.business.base.entity.DeliveryMethod;
+import com.dmainardi.pipeer.business.base.entity.PaymentMethod;
 import com.dmainardi.pipeer.business.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -58,6 +62,15 @@ public class CustomerSupplier extends BaseEntity<Long>{
     @Column(nullable = false)
     @NotNull
     private Boolean isSupplier;
+    
+    @ManyToOne
+    private Bank bank;
+    
+    @ManyToOne
+    private DeliveryMethod deliveryMethod;  //only for suppliers
+    
+    @ManyToOne
+    private PaymentMethod paymentMethod;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerSupplier", orphanRemoval = true)
     private List<Plant> plants;
@@ -160,6 +173,30 @@ public class CustomerSupplier extends BaseEntity<Long>{
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
     
 }

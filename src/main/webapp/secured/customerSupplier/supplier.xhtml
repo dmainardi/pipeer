@@ -45,6 +45,45 @@
                     <bnu:inputText id="taxCode" value="#{supplierPresenter.supplier.taxCode}"/>
                     <bnu:message/>
                     
+                    <h:outputLabel for="bank" value="#{msg.customerSupplier_customer_bank}"/>
+                    <h:selectOneMenu id="bank"
+                                     value="#{supplierPresenter.supplier.bank}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msg.base_bank_noSelection}" noSelectionOption="true"/>
+                        <f:selectItems value="#{bankPresenter.listBanks()}"
+                                       var="bank"
+                                       itemLabel="#{bank.branch}"
+                                       itemValue="#{bank}"/>
+                    </h:selectOneMenu>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="deliveryMethod" value="#{msg.customerSupplier_customer_deliveryMethod}"/>
+                    <h:selectOneMenu id="deliveryMethod"
+                                     value="#{supplierPresenter.supplier.deliveryMethod}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msg.base_deliveryMethod_noSelection}" noSelectionOption="true"/>
+                        <f:selectItems value="#{deliveryMethodPresenter.listDeliveryMethods()}"
+                                       var="deliveryMethod"
+                                       itemLabel="#{deliveryMethod.name}"
+                                       itemValue="#{deliveryMethod}"/>
+                    </h:selectOneMenu>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="paymentMethod" value="#{msg.customerSupplier_customer_paymentMethod}"/>
+                    <h:selectOneMenu id="paymentMethod"
+                                     value="#{supplierPresenter.supplier.paymentMethod}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msg.base_paymentMethod_noSelection}" noSelectionOption="true"/>
+                        <f:selectItems value="#{paymentMethodPresenter.listPaymentMethods()}"
+                                       var="paymentMethod"
+                                       itemLabel="#{paymentMethod.name}"
+                                       itemValue="#{paymentMethod}"/>
+                    </h:selectOneMenu>
+                    <bnu:message/>
+                    
                     <h:outputLabel for="notes" value="#{msg.customerSupplier_customer_notes}"/>
                     <bnu:inputTextarea id="notes" value="#{supplierPresenter.supplier.notes}" field-size="md"/>
                     <bnu:message/>
