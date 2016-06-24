@@ -44,7 +44,7 @@ public class Referee extends BaseEntity<Long>{
     
     private String phone;
     private String mobile;
-    private String eMail;
+    private String email;
     
     @ManyToOne(optional = false)
     private CustomerSupplier customerSupplier;
@@ -78,12 +78,12 @@ public class Referee extends BaseEntity<Long>{
         this.mobile = mobile;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public CustomerSupplier getCustomerSupplier() {

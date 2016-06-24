@@ -1,12 +1,135 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <f:metadata>
+        <f:viewParam name="id"
+                     value="#{supplierPresenter.id}"
+                     converter="javax.faces.Long"/>
+        <f:viewAction action="#{supplierPresenter.detailSupplier()}"/>
+    </f:metadata>
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.customerSupplier_supplier}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.customerSupplier_supplier_tip}</ui:define>
+        <ui:define name="content">
+            <h:form id="formCustomerSupplier">
+                <bnu:panelGrid colSpans="3,5,4">
+                    <h:outputLabel for="isCustomer" value="#{msg.customerSupplier_customer_isCustomer}"/>
+                    <bnu:selectBooleanCheckbox id="isCustomer" value="#{supplierPresenter.supplier.isCustomer}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="isSupplier" value="#{msg.customerSupplier_customer_isSupplier}"/>
+                    <bnu:selectBooleanCheckbox id="isSupplier" value="#{supplierPresenter.supplier.isSupplier}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="code" value="#{msg.customerSupplier_customer_code}"/>
+                    <bnu:inputText id="code" value="#{supplierPresenter.supplier.code}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="businessName" value="#{msg.customerSupplier_customer_businessName}"/>
+                    <bnu:inputText id="businessName" value="#{supplierPresenter.supplier.businessName}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="name" value="#{msg.customerSupplier_customer_name}"/>
+                    <bnu:inputText id="name" value="#{supplierPresenter.supplier.name}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="vatRegistrationNumber" value="#{msg.customerSupplier_customer_vatRegistrationNumber}"/>
+                    <bnu:inputText id="vatRegistrationNumber" value="#{supplierPresenter.supplier.vatRegistrationNumber}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="taxCode" value="#{msg.customerSupplier_customer_taxCode}"/>
+                    <bnu:inputText id="taxCode" value="#{supplierPresenter.supplier.taxCode}"/>
+                    <bnu:message/>
+                    
+                    <h:outputLabel for="notes" value="#{msg.customerSupplier_customer_notes}"/>
+                    <bnu:inputTextarea id="notes" value="#{supplierPresenter.supplier.notes}" field-size="md"/>
+                    <bnu:message/>
+                </bnu:panelGrid>
+                <bnu:row>
+                    <bnu:column colMd="6">
+                        <h:commandButton value="#{msg.customerSupplier_plant_new}"
+                                         action="#{supplierPresenter.detailPlant(null)}"
+                                         styleClass="btn btn-primary"/>
+                        <h:dataTable value="#{supplierPresenter.supplier.plants}"
+                                     var="plant"
+                                     styleClass="table table-striped table-bordered">
+                            <f:facet name="header">
+                                #{msg.customerSupplier_plant_list}
+                            </f:facet>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_name}</f:facet>
+                                <h:outputText value="#{plant.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_address}</f:facet>
+                                <h:outputText value="#{plant.address}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_isHeadOffice}</f:facet>
+                                <h:outputText value="#{plant.isHeadOffice?'X':''}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.actions}</f:facet>
+                                <bnu:buttonGroup>
+                                    <h:commandButton value="#{msg.remove}"
+                                                     action="#{supplierPresenter.removePlant(plant)}"
+                                                     styleClass="btn btn-danger"/>
+                                    <h:commandButton value="#{msg.open}"
+                                                     action="#{supplierPresenter.detailPlant(plant)}"
+                                                     styleClass="btn btn-primary"/>
+                                </bnu:buttonGroup>
+                            </h:column>
+                        </h:dataTable>
+                    </bnu:column>
+                    <bnu:column colMd="6">
+                        <h:commandButton value="#{msg.customerSupplier_referee_new}"
+                                         action="#{supplierPresenter.detailReferee(null)}"
+                                         styleClass="btn btn-primary"/>
+                        <h:dataTable value="#{supplierPresenter.supplier.referees}"
+                                     var="referee"
+                                     styleClass="table table-striped table-bordered">
+                            <f:facet name="header">
+                                #{msg.customerSupplier_referee_list}
+                            </f:facet>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_referee_name}</f:facet>
+                                <h:outputText value="#{referee.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_referee_eMail}</f:facet>
+                                <h:outputText value="#{referee.email}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.actions}</f:facet>
+                                <bnu:buttonGroup>
+                                    <h:commandButton value="#{msg.remove}"
+                                                     action="#{supplierPresenter.removeReferee(referee)}"
+                                                     styleClass="btn btn-danger"/>
+                                    <h:commandButton value="#{msg.open}"
+                                                     action="#{supplierPresenter.detailReferee(referee)}"
+                                                     styleClass="btn btn-primary"/>
+                                </bnu:buttonGroup>
+                            </h:column>
+                        </h:dataTable>
+                    </bnu:column>
+                </bnu:row>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <h:button value="#{msg.cancel}" outcome="exitFlow" styleClass="btn-block btn btn-default"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{supplierPresenter.saveSupplier()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
 
