@@ -48,19 +48,6 @@ public class CustomerPresenter implements Serializable{
         return "plant?faces-redirect=true";
     }
     
-    public void removeReferee(Referee refereeBeingRemoved) {
-        refereeBeingRemoved.setCustomerSupplier(null);
-        customer.getReferees().remove(refereeBeingRemoved);
-    }
-    
-    public String addReferee() {
-        if (!customer.getReferees().contains(referee)) {
-            referee.setCustomerSupplier(customer);
-            customer.getReferees().add(referee);
-        }
-        return "customer?faces-redirect=true";
-    }
-    
     public String detailReferee(Referee refereeBeingOpened) {
         if (refereeBeingOpened == null)
             referee = new Referee();
@@ -99,10 +86,6 @@ public class CustomerPresenter implements Serializable{
 
     public Referee getReferee() {
         return referee;
-    }
-
-    public void setReferee(Referee referee) {
-        this.referee = referee;
     }
 
     public Long getId() {

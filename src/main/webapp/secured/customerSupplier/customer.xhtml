@@ -1,12 +1,161 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <f:metadata>
+        <f:viewParam name="id"
+                     value="#{customerPresenter.id}"
+                     converter="javax.faces.Long"/>
+        <f:viewAction action="#{customerPresenter.detailCustomer()}"/>
+    </f:metadata>
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.customerSupplier_customer}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.customerSupplier_customer_tip}</ui:define>
+        <ui:define name="content">
+            <h:form id="formCustomerSupplier">
+                <bnu:panelGrid colSpans="3,5,4">
+                    <h:outputLabel for="isCustomer" value="#{msg.customerSupplier_customer_isCustomer}"/>
+                    <bnu:selectBooleanCheckbox id="isCustomer" value="#{customerPresenter.customer.isCustomer}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="isSupplier" value="#{msg.customerSupplier_customer_isSupplier}"/>
+                    <bnu:selectBooleanCheckbox id="isSupplier" value="#{customerPresenter.customer.isSupplier}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="code" value="#{msg.customerSupplier_customer_code}"/>
+                    <bnu:inputText id="code" value="#{customerPresenter.customer.code}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="businessName" value="#{msg.customerSupplier_customer_businessName}"/>
+                    <bnu:inputText id="businessName" value="#{customerPresenter.customer.businessName}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="name" value="#{msg.customerSupplier_customer_name}"/>
+                    <bnu:inputText id="name" value="#{customerPresenter.customer.name}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="vatRegistrationNumber" value="#{msg.customerSupplier_customer_vatRegistrationNumber}"/>
+                    <bnu:inputText id="vatRegistrationNumber" value="#{customerPresenter.customer.vatRegistrationNumber}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="taxCode" value="#{msg.customerSupplier_customer_taxCode}"/>
+                    <bnu:inputText id="taxCode" value="#{customerPresenter.customer.taxCode}"/>
+                    <bnu:message/>
+
+                    <h:outputLabel for="bank" value="#{msg.customerSupplier_customer_bank}"/>
+                    <h:selectOneMenu id="bank"
+                                     value="#{customerPresenter.customer.bank}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msg.base_bank_noSelection}" noSelectionOption="true"/>
+                        <f:selectItems value="#{bankPresenter.listBanks()}"
+                                       var="bank"
+                                       itemLabel="#{bank.branch}"
+                                       itemValue="#{bank}"/>
+                    </h:selectOneMenu>
+                    <bnu:message/>
+
+                    <h:outputLabel for="paymentMethod" value="#{msg.customerSupplier_customer_paymentMethod}"/>
+                    <h:selectOneMenu id="paymentMethod"
+                                     value="#{customerPresenter.customer.paymentMethod}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msg.base_paymentMethod_noSelection}" noSelectionOption="true"/>
+                        <f:selectItems value="#{paymentMethodPresenter.listPaymentMethods()}"
+                                       var="paymentMethod"
+                                       itemLabel="#{paymentMethod.name}"
+                                       itemValue="#{paymentMethod}"/>
+                    </h:selectOneMenu>
+                    <bnu:message/>
+
+                    <h:outputLabel for="notes" value="#{msg.customerSupplier_customer_notes}"/>
+                    <bnu:inputTextarea id="notes" value="#{customerPresenter.customer.notes}" field-size="md"/>
+                    <bnu:message/>
+                </bnu:panelGrid>
+                <bnu:row>
+                    <bnu:column colMd="6">
+                        <h:commandButton value="#{msg.customerSupplier_plant_new}"
+                                         action="#{customerPresenter.detailPlant(null)}"
+                                         styleClass="btn btn-primary"/>
+                        <h:dataTable value="#{customerPresenter.customer.plants}"
+                                     var="plant"
+                                     styleClass="table table-striped table-bordered">
+                            <f:facet name="header">
+                                #{msg.customerSupplier_plant_list}
+                            </f:facet>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_name}</f:facet>
+                                <h:outputText value="#{plant.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_address}</f:facet>
+                                <h:outputText value="#{plant.address}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_plant_isHeadOffice}</f:facet>
+                                <h:outputText value="#{plant.isHeadOffice?'X':''}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.actions}</f:facet>
+                                <bnu:buttonGroup>
+                                    <h:commandButton value="#{msg.remove}"
+                                                     action="#{plantPresenter.removePlant(plant)}"
+                                                     styleClass="btn btn-danger"/>
+                                    <h:commandButton value="#{msg.open}"
+                                                     action="#{customerPresenter.detailPlant(plant)}"
+                                                     styleClass="btn btn-primary"/>
+                                </bnu:buttonGroup>
+                            </h:column>
+                        </h:dataTable>
+                    </bnu:column>
+                    <bnu:column colMd="6">
+                        <h:commandButton value="#{msg.customerSupplier_referee_new}"
+                                         action="#{customerPresenter.detailReferee(null)}"
+                                         styleClass="btn btn-primary"/>
+                        <h:dataTable value="#{customerPresenter.customer.referees}"
+                                     var="referee"
+                                     styleClass="table table-striped table-bordered">
+                            <f:facet name="header">
+                                #{msg.customerSupplier_referee_list}
+                            </f:facet>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_referee_name}</f:facet>
+                                <h:outputText value="#{referee.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.customerSupplier_referee_eMail}</f:facet>
+                                <h:outputText value="#{referee.email}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msg.actions}</f:facet>
+                                <bnu:buttonGroup>
+                                    <h:commandButton value="#{msg.remove}"
+                                                     action="#{refereePresenter.removeReferee(referee)}"
+                                                     styleClass="btn btn-danger"/>
+                                    <h:commandButton value="#{msg.open}"
+                                                     action="#{customerPresenter.detailReferee(referee)}"
+                                                     styleClass="btn btn-primary"/>
+                                </bnu:buttonGroup>
+                            </h:column>
+                        </h:dataTable>
+                    </bnu:column>
+                </bnu:row>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <h:button value="#{msg.cancel}" outcome="exitFlow" styleClass="btn-block btn btn-default"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{customerPresenter.saveCustomer()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
 
