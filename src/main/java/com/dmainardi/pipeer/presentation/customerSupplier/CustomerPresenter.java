@@ -40,19 +40,6 @@ public class CustomerPresenter implements Serializable{
     private Referee referee;
     private Long id;
     
-    public void removePlant(Plant plantBeingRemoved) {
-        plantBeingRemoved.setCustomerSupplier(null);
-        customer.getPlants().remove(plantBeingRemoved);
-    }
-    
-    public String addPlant() {
-        if (!customer.getPlants().contains(plant)) {
-            plant.setCustomerSupplier(customer);
-            customer.getPlants().add(plant);
-        }
-        return "customer?faces-redirect=true";
-    }
-    
     public String detailPlant(Plant plantBeingOpened) {
         if (plantBeingOpened == null)
             plant = new Plant();
@@ -108,10 +95,6 @@ public class CustomerPresenter implements Serializable{
 
     public Plant getPlant() {
         return plant;
-    }
-
-    public void setPlant(Plant plant) {
-        this.plant = plant;
     }
 
     public Referee getReferee() {

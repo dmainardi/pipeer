@@ -88,5 +88,9 @@ public class PlantPresenter implements Serializable {
     public void setPlant(Plant plant) {
         this.plant = plant;
     }
+
+    public String getReturnOutcome() {
+        return returnOutcome;
+    }
     
 }

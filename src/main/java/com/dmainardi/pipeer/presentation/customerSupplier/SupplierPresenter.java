@@ -97,10 +97,6 @@ public class SupplierPresenter implements Serializable{
         return plant;
     }
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
-    }
-
     public Referee getReferee() {
         return referee;
     }
