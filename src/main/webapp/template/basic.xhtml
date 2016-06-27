@@ -14,7 +14,11 @@
     <!-- Add 55px padding top and bottom to the body for the navbars -->
     <h:body style="padding-top: 55px; padding-bottom: 55px;">
         <h:form>
-            <b:navBar brand="PipeeR" brandHref="/pipeer" inverse="true" fixed="top">
+            <b:navBar brand="PipeeR"
+                      brandHref="/pipeer"
+                      inverse="true"
+                      fixed="top"
+                      rendered="#{null == facesContext.application.flowHandler.currentFlow}">
                 <b:navbarLinks class="visible-xs">
                     <ui:include src="sideMenu.xhtml"/>
                 </b:navbarLinks>
@@ -22,9 +26,13 @@
             </b:navBar>
         </h:form>
         <b:container fluid="true">
+            <b:alert severity="warning"
+                     rendered="#{null != facesContext.application.flowHandler.currentFlow}">
+                #{msg.endFlow}
+            </b:alert>
             <b:row>
                 <b:column hidden="xs" col-sm="3" col-md="2" styleClass="sidebar">
-                    <b:listLinks>
+                    <b:listLinks rendered="#{null == facesContext.application.flowHandler.currentFlow}">
                         <ui:include src="sideMenu.xhtml"/>
                     </b:listLinks>
                 </b:column>
@@ -39,7 +47,7 @@
                     <ui:insert name="content" />
                 </b:column>
                 <b:column col-md="2">
-                    <b:messages/>
+                    <b:messages global-only="true" />
                 </b:column>
             </b:row>
         </b:container>
