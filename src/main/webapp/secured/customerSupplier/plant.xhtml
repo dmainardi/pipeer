@@ -11,31 +11,31 @@
             <h:form id="formPlant">
                 <bnu:panelGrid colSpans="3,5,4">
                     <h:outputLabel for="name" value="#{msg.customerSupplier_plant_name}"/>
-                    <bnu:inputText id="name" value="#{supplierPresenter.plant.name}"/>
+                    <bnu:inputText id="name" value="#{plantPresenter.plant.name}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="address" value="#{msg.customerSupplier_plant_address}"/>
-                    <bnu:inputTextarea id="address" value="#{supplierPresenter.plant.address}"/>
+                    <bnu:inputTextarea id="address" value="#{plantPresenter.plant.address}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="phone" value="#{msg.customerSupplier_plant_phone}"/>
-                    <bnu:inputText id="phone" value="#{supplierPresenter.plant.phone}"/>
+                    <bnu:inputText id="phone" value="#{plantPresenter.plant.phone}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="fax" value="#{msg.customerSupplier_plant_fax}"/>
-                    <bnu:inputText id="fax" value="#{supplierPresenter.plant.fax}"/>
+                    <bnu:inputText id="fax" value="#{plantPresenter.plant.fax}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="eMail" value="#{msg.customerSupplier_plant_email}"/>
-                    <bnu:inputText id="eMail" value="#{supplierPresenter.plant.email}"/>
+                    <bnu:inputText id="eMail" value="#{plantPresenter.plant.email}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="isHeadOffice" value="#{msg.customerSupplier_plant_isHeadOffice}"/>
-                    <bnu:selectBooleanCheckbox id="isHeadOffice" value="#{supplierPresenter.plant.isHeadOffice}"/>
+                    <bnu:selectBooleanCheckbox id="isHeadOffice" value="#{plantPresenter.plant.isHeadOffice}"/>
                     <bnu:message/>
                     
                     <h:outputLabel for="notes" value="#{msg.customerSupplier_plant_notes}"/>
-                    <bnu:inputTextarea id="notes" value="#{supplierPresenter.plant.notes}"/>
+                    <bnu:inputTextarea id="notes" value="#{plantPresenter.plant.notes}"/>
                     <bnu:message/>
                 </bnu:panelGrid>
                 <bnu:row>
@@ -45,7 +45,7 @@
                     <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
                         <h:commandButton
                             value="#{msg.save}"
-                            action="#{supplierPresenter.addPlant()}"
+                            action="#{plantPresenter.addPlant()}"
                             styleClass="btn btn-block btn-primary"/>
                     </bnu:column>
                 </bnu:row>

@@ -40,19 +40,6 @@ public class SupplierPresenter implements Serializable{
     private Referee referee;
     private Long id;
     
-    public void removePlant(Plant plantBeingRemoved) {
-        plantBeingRemoved.setCustomerSupplier(null);
-        supplier.getPlants().remove(plantBeingRemoved);
-    }
-    
-    public String addPlant() {
-        if (!supplier.getPlants().contains(plant)) {
-            plant.setCustomerSupplier(supplier);
-            supplier.getPlants().add(plant);
-        }
-        return "supplier?faces-redirect=true";
-    }
-    
     public String detailPlant(Plant plantBeingOpened) {
         if (plantBeingOpened == null)
             plant = new Plant();
