@@ -35,7 +35,7 @@ public class DeliveryMethod extends BaseEntity<Long>{
     private Long id;
     
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     
     @Version

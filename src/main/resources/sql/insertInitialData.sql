@@ -8,4 +8,22 @@ INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('maina', 'user
 INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('maina', 'admin')
 INSERT INTO users_groups_app(user_name, groups_group_name) VALUES('guest', 'user')
 
+INSERT INTO bank(id, iban, branch, version) VALUES (1001, 'IT00A0000000000000000000000', 'Intesa San Paolo - Pinerolo Piazza San Donato', 0)
+INSERT INTO bank(id, iban, branch, version) VALUES (1002, 'IT00A0000000000000000000001', 'Unicredit - Torino Piazza Pitagora', 0)
+INSERT INTO bank(id, iban, branch, version) VALUES (1003, 'IT00A0000000000000000000002', 'Banca del Piemonte - Saluzzo Via Roma', 0)
+INSERT INTO bank(id, iban, branch, version) VALUES (1004, 'IT00A0000000000000000000003', 'Mediolanum - Milano via Monte Napoleone', 0)
+
+INSERT INTO deliverymethod(id, name, version) VALUES (1001, 'Presso ns. stabilimento', 0)
+INSERT INTO deliverymethod(id, name, version) VALUES (1002, 'Presso cantiere Apple a Cupertino', 0)
+INSERT INTO deliverymethod(id, name, version) VALUES (1003, 'Presso sede Mediobanca a Milano', 0)
+
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1001, 'BB 120 DFFM', 120, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1002, 'BB 60 DFFM', 60, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1003, 'BB 90 DFFM', 90, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1004, 'BB 30 DFFM', 30, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1005, 'RIBA 120 DFFM', 120, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1006, 'RIBA 60 DFFM', 60, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1007, 'RIBA 90 DFFM', 90, 0)
+INSERT INTO paymentmethod(id, name, days, version) VALUES (1008, 'RIBA 30 DFFM', 30, 0)
+
 INSERT INTO customerSupplier(id, businessName, name, isCustomer, isSupplier, version) VALUES (1001, 'mainardi', 'maina', 1, 1, 0)
