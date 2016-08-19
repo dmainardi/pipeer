@@ -11,10 +11,10 @@
         <ui:define name="content">
             <h:form>
                 <bnu:dataTable value="#{deliveryMethodPresenter.listDeliveryMethods()}" var="devMeth">
-                    <h:column>
+                    <bnu:dataTableColumn>
                         <f:facet name="header">#{msg.base_deliveryMethod_name}</f:facet>
                         <h:outputText value="#{devMeth.name}"/>
-                    </h:column>
+                    </bnu:dataTableColumn>
                     <h:column>
                         <f:facet name="header">#{msg.actions}</f:facet>
                         <bnu:buttonGroup>

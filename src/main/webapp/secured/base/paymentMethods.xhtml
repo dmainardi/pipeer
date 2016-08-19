@@ -11,10 +11,16 @@
         <ui:define name="content">
             <h:form>
                 <bnu:dataTable value="#{paymentMethodPresenter.listPaymentMethods()}" var="paymMeth">
-                    <h:column>
+                    <bnu:dataTableColumn>
                         <f:facet name="header">#{msg.base_paymentMethod_name}</f:facet>
                         <h:outputText value="#{paymMeth.name}"/>
-                    </h:column>
+                    </bnu:dataTableColumn>
+                    <bnu:dataTableColumn headerStyleClass="hidden-xs" contentStyleClass="hidden-xs" footerStyleClass="hidden-xs">
+                        <f:facet name="header">#{msg.base_paymentMethod_days}</f:facet>
+                        <h:outputText value="#{paymMeth.days}">
+                            <f:convertNumber integerOnly="true"/>
+                        </h:outputText>
+                    </bnu:dataTableColumn>
                     <h:column>
                         <f:facet name="header">#{msg.actions}</f:facet>
                         <bnu:buttonGroup>

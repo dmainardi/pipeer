@@ -11,14 +11,14 @@
         <ui:define name="content">
             <h:form>
                 <bnu:dataTable value="#{bankPresenter.listBanks()}" var="bank">
-                    <h:column>
+                    <bnu:dataTableColumn headerStyleClass="hidden-xs" contentStyleClass="hidden-xs" footerStyleClass="hidden-xs">
                         <f:facet name="header">#{msg.base_bank_iban}</f:facet>
                         <h:outputText value="#{bank.iban}"/>
-                    </h:column>
-                    <h:column>
+                    </bnu:dataTableColumn>
+                    <bnu:dataTableColumn>
                         <f:facet name="header">#{msg.base_bank_branch}</f:facet>
                         <h:outputText value="#{bank.branch}"/>
-                    </h:column>
+                    </bnu:dataTableColumn>
                     <h:column>
                         <f:facet name="header">#{msg.actions}</f:facet>
                         <bnu:buttonGroup>
