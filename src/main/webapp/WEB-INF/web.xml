@@ -58,4 +58,25 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
+    <!-- mime-mapping added to fix Primefaces "JSF 1091 Warning, Mime-Type Problems" -->
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <mime-mapping> 
+        <extension>otf</extension> 
+        <mime-type>font/opentype</mime-type> 
+    </mime-mapping>     
+    <mime-mapping> 
+        <extension>ttf</extension> 
+        <mime-type>application/x-font-ttf</mime-type> 
+    </mime-mapping>     
+    <mime-mapping> 
+        <extension>woff</extension> 
+        <mime-type>application/x-font-woff</mime-type> 
+    </mime-mapping>
+    <mime-mapping> 
+        <extension>svg</extension> 
+        <mime-type>image/svg+xml</mime-type> 
+    </mime-mapping>
 </web-app>
