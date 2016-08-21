@@ -58,6 +58,29 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
+    
+    <!--    Useful for custom error pages-->
+    <filter>
+        <filter-name>facesExceptionFilter</filter-name>
+        <filter-class>org.omnifaces.filter.FacesExceptionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>facesExceptionFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <context-param>
+        <param-name>org.omnifaces.EXCEPTION_TYPES_TO_UNWRAP</param-name>
+        <param-value>javax.ejb.EJBException,javax.persistence.RollbackException</param-value>
+    </context-param>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/error/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/error/500.xhtml</location>
+    </error-page>
+    
     <!-- mime-mapping added to fix Primefaces "JSF 1091 Warning, Mime-Type Problems" -->
     <mime-mapping>
         <extension>eot</extension>
