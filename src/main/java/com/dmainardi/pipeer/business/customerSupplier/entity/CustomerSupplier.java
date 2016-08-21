@@ -42,7 +42,7 @@ public class CustomerSupplier extends BaseEntity<Long>{
     @GeneratedValue
     private Long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotNull
     private String businessName;
     

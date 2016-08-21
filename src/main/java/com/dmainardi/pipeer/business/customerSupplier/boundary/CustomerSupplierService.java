@@ -18,6 +18,7 @@ package com.dmainardi.pipeer.business.customerSupplier.boundary;
 
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier;
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier_;
+import com.dmainardi.pipeer.business.customerSupplier.entity.Plant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,13 @@ public class CustomerSupplierService {
     EntityManager em;
 
     public CustomerSupplier saveCustomerSupplier(CustomerSupplier customerSupplier) {
+        int headOffice = 0;
+        for (Plant plant : customerSupplier.getPlants())
+            if (plant.getIsHeadOffice())
+                headOffice++;
+        if (headOffice != 1)
+            throw new IllegalArgumentException("Customer/supplier must have one head office");
+            
         if (customerSupplier.getId() == null)
             em.persist(customerSupplier);
         else

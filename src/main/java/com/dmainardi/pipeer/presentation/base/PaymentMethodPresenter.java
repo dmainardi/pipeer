@@ -18,8 +18,12 @@ package com.dmainardi.pipeer.presentation.base;
 
 import com.dmainardi.pipeer.business.base.boundary.PaymentMethodService;
 import com.dmainardi.pipeer.business.base.entity.PaymentMethod;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +46,12 @@ public class PaymentMethodPresenter implements Serializable{
     }
     
     public String savePaymentMethod() {
-        service.savePaymentMethod(paymentMethod);
+        try {
+            service.savePaymentMethod(paymentMethod);
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+            return null;
+        }
         
         return "/secured/base/paymentMethods?faces-redirect=true";
     }

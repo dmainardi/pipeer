@@ -18,8 +18,12 @@ package com.dmainardi.pipeer.presentation.base;
 
 import com.dmainardi.pipeer.business.base.boundary.DeliveryMethodService;
 import com.dmainardi.pipeer.business.base.entity.DeliveryMethod;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +46,12 @@ public class DeliveryMethodPresenter implements Serializable{
     }
     
     public String saveDeliveryMethod() {
-        service.saveDeliveryMethod(deliveryMethod);
+        try {
+            service.saveDeliveryMethod(deliveryMethod);
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+            return null;
+        }
         
         return "/secured/base/deliveryMethods?faces-redirect=true";
     }

@@ -20,7 +20,11 @@ import com.dmainardi.pipeer.business.customerSupplier.boundary.CustomerSupplierS
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier;
 import com.dmainardi.pipeer.business.customerSupplier.entity.Plant;
 import com.dmainardi.pipeer.business.customerSupplier.entity.Referee;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,15 +61,22 @@ public class CustomerPresenter implements Serializable{
     }
     
     public String saveCustomer() {
-        service.saveCustomerSupplier(customer);
+        try {
+            service.saveCustomerSupplier(customer);
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+            return null;
+        }
         
         return "exitFlow";
     }
     
     public void detailCustomer() {
         if (id != null) {
-            if (id == 0)
+            if (id == 0) {
                 customer = new CustomerSupplier();
+                customer.setIsCustomer(Boolean.TRUE);
+            }
             else
                 customer = service.readCustomerSupplier(id);
             id = null;
