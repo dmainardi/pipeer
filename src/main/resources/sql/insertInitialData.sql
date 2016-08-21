@@ -27,3 +27,7 @@ INSERT INTO paymentmethod(id, name, days, version) VALUES (1007, 'RIBA 90 DFFM',
 INSERT INTO paymentmethod(id, name, days, version) VALUES (1008, 'RIBA 30 DFFM', 30, 0)
 
 INSERT INTO customerSupplier(id, businessName, name, isCustomer, isSupplier, version) VALUES (1001, 'mainardi', 'maina', 1, 1, 0)
+INSERT INTO plant(id, customerSupplier_id, name, address, isHeadOffice, version) VALUES (1001, 1001, 'Headquarter', 'Piazza Roma, 1', 1, 0)
+INSERT INTO plant(id, customerSupplier_id, name, address, isHeadOffice, version) VALUES (1002, 1001, 'Warehouse', 'Via Torino, 5', 0, 0)
+INSERT INTO referee(id, customerSupplier_id, name, version) VALUES (1001, 1001, 'Maina', 0)
+INSERT INTO referee(id, customerSupplier_id, name, version) VALUES (1002, 1001, 'Mainardi Davide', 0)
