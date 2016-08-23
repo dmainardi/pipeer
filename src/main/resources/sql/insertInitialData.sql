@@ -35,3 +35,7 @@ INSERT INTO plant(id, customerSupplier_id, name, address, isHeadOffice, version)
 INSERT INTO plant(id, customerSupplier_id, name, address, isHeadOffice, version) VALUES (1002, 1001, 'Warehouse', 'Via Torino, 5', 0, 0)
 INSERT INTO referee(id, customerSupplier_id, name, version) VALUES (1001, 1001, 'Maina', 0)
 INSERT INTO referee(id, customerSupplier_id, name, version) VALUES (1002, 1001, 'Mainardi Davide', 0)
+
+INSERT INTO tag(id, name, version) VALUES (1001, 'Inox', 0)
+INSERT INTO tag(id, name, version) VALUES (1002, 'Steel', 0)
+INSERT INTO tag(id, name, version) VALUES (1003, '40/40', 0)
