@@ -16,10 +16,99 @@
  */
 package com.dmainardi.pipeer.business.item.boundary;
 
+import com.dmainardi.pipeer.business.item.entity.Item;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
+@Stateless
 public class ItemService {
+
+    @PersistenceContext
+    EntityManager em;
+
+    public Item saveItem(Item item) {
+        if (item.getId() == null)
+            em.persist(item);
+        else
+            return em.merge(item);
+
+        return null;
+    }
+
+    public Item readItem(Long id) {
+        return em.find(Item.class, id);
+    }
+
+    public void deleteItem(Long id) {
+        em.remove(readItem(id));
+    }
     
+    public List<Item> listItems(int first, int pageSize, Map<String, Object> filters, String sortField, Boolean isAscending) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Item> query = cb.createQuery(Item.class);
+        Root<Item> root = query.from(Item.class);
+        CriteriaQuery<Item> select = query.select(root).distinct(true);
+
+        List<Predicate> conditions = new ArrayList<>();
+        
+        if (filters != null) {
+            for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+                String filterProperty = it.next();
+                conditions.add(cb.like(cb.lower(root.get(filterProperty)), "%" + String.valueOf(filters.get(filterProperty)).toLowerCase() + "%"));
+            }
+        }
+
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
+        
+        if (isAscending != null && sortField != null && !sortField.isEmpty()) {
+            if (isAscending)
+                query.orderBy(cb.asc(root.get(sortField)));
+            else
+                query.orderBy(cb.desc(root.get(sortField)));
+        }
+        
+        TypedQuery<Item> typedQuery = em.createQuery(select);
+        typedQuery.setMaxResults(pageSize);
+        typedQuery.setFirstResult(first);
+
+        return typedQuery.getResultList();
+    }
+    
+    public Long getItemsCount(Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Item> root = query.from(Item.class);
+        CriteriaQuery<Long> select = query.select(cb.count(root));
+
+        List<Predicate> conditions = new ArrayList<>();
+        
+        if (filters != null) {
+            for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+                String filterProperty = it.next();
+                conditions.add(cb.like(cb.lower(root.get(filterProperty)), "%" + String.valueOf(filters.get(filterProperty)).toLowerCase() + "%"));
+            }
+        }
+
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
+
+        return em.createQuery(select).getSingleResult();
+    }
 }

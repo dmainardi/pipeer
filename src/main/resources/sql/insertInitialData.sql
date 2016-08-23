@@ -39,3 +39,10 @@ INSERT INTO referee(id, customerSupplier_id, name, version) VALUES (1002, 1001, 
 INSERT INTO tag(id, name, version) VALUES (1001, 'Inox', 0)
 INSERT INTO tag(id, name, version) VALUES (1002, 'Steel', 0)
 INSERT INTO tag(id, name, version) VALUES (1003, '40/40', 0)
+
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1001, 1002, 'p001', 'Pipe 3.14', 0)
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1002, 1002, 'p002', 'Pipe 4.15', 0)
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1003, 1002, 'p003', 'Pipe 5.16', 0)
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1004, 1002, 'p004', 'Pipe 6.17', 0)
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1005, 1003, 'l001', 'Liquid C10', 0)
+INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1006, 1003, 'l002', 'Liquid A008', 0)
