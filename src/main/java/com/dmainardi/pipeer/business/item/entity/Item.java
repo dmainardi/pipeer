@@ -18,6 +18,7 @@ package com.dmainardi.pipeer.business.item.entity;
 
 import com.dmainardi.pipeer.business.base.entity.UnitMeasure;
 import com.dmainardi.pipeer.business.entity.BaseEntity;
+import com.dmainardi.pipeer.business.workshop.entity.Process;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -65,6 +67,9 @@ public class Item extends BaseEntity<Long>{
     
     @Transient
     private String tagsStr;
+    
+    @OneToOne
+    private Process process;
     
     @Version
     private int version;
@@ -145,6 +150,14 @@ public class Item extends BaseEntity<Long>{
 
     public void setTagsStr(String tagsStr) {
         this.tagsStr = tagsStr;
+    }
+
+    public Process getProcess() {
+        return process;
+    }
+
+    public void setProcess(Process process) {
+        this.process = process;
     }
     
 }

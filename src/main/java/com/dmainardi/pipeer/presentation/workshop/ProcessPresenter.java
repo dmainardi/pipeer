@@ -20,6 +20,7 @@ import com.dmainardi.pipeer.business.workshop.boundary.ProcessService;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
@@ -41,8 +42,19 @@ public class ProcessPresenter implements Serializable {
     private Process process;
     private Long id;
     
+    public List<String> listProcessesStr(String query) {
+        List<String> result = new ArrayList<>();
+        
+        List<Process> processes = service.listProcesses(query);
+        if (processes != null && !processes.isEmpty())
+            for (Process processTemp : processes)
+                result.add(processTemp.getName());
+        
+        return result;
+    }
+    
     public List<Process> listProcesses() {
-        return service.listProcesses();
+        return service.listProcesses(null);
     }
     
     public String saveProcess() {

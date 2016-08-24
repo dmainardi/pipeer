@@ -17,13 +17,16 @@
 package com.dmainardi.pipeer.business.workshop.boundary;
 
 import com.dmainardi.pipeer.business.workshop.entity.Process;
+import com.dmainardi.pipeer.business.workshop.entity.Process_;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -52,11 +55,19 @@ public class ProcessService implements Serializable {
         em.remove(readProcess(id));
     }
 
-    public List<Process> listProcesses() {
+    public List<Process> listProcesses(String name) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Process> query = cb.createQuery(Process.class);
         Root<Process> root = query.from(Process.class);
         CriteriaQuery<Process> select = query.select(root).distinct(true);
+        
+        List<Predicate> conditions = new ArrayList<>();
+        if (name != null && !name.isEmpty())
+            conditions.add(cb.equal(cb.lower(root.get(Process_.name)), name.toLowerCase()));
+        
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
 
         return em.createQuery(select).getResultList();
     }
