@@ -16,8 +16,6 @@
  */
 package com.dmainardi.pipeer.business.item.boundary;
 
-import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier_;
-import static com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier_.isCustomer;
 import com.dmainardi.pipeer.business.item.entity.Tag;
 import com.dmainardi.pipeer.business.item.entity.Tag_;
 import java.io.Serializable;

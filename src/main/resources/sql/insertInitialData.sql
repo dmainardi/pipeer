@@ -47,5 +47,10 @@ INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1004, 1002, 'p
 INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1005, 1003, 'l001', 'Liquid C10', 0)
 INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1006, 1003, 'l002', 'Liquid A008', 0)
 
-INSERT INTO item_tag(item_id, tags_id) VALUES(1006, 1001)
-INSERT INTO item_tag(item_id, tags_id) VALUES(1006, 1003)
+INSERT INTO item_tag(item_id, tags_id) VALUES (1006, 1001)
+INSERT INTO item_tag(item_id, tags_id) VALUES (1006, 1003)
+
+INSERT INTO process(id, name, standardCost, version) VALUES (1001, 'Laser cutting', 35, 0)
+INSERT INTO process(id, name, standardCost, version) VALUES (1002, 'TIG welding', 45, 0)
+INSERT INTO process(id, name, standardCost, version) VALUES (1003, 'Painting', 37.5, 0)
+INSERT INTO process(id, name, standardCost, version) VALUES (1004, 'Internal generic process', 111.11, 0)

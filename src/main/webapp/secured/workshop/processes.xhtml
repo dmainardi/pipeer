@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.workshop_processes}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.workshop_processes_tip}</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <bnu:dataTable value="#{processPresenter.listProcesses()}" var="process">
+                    <bnu:dataTableColumn>
+                        <f:facet name="header">#{msg.workshop_process_name}</f:facet>
+                        <h:outputText value="#{process.name}"/>
+                    </bnu:dataTableColumn>
+                    <bnu:dataTableColumn headerStyleClass="hidden-xs" contentStyleClass="hidden-xs" footerStyleClass="hidden-xs">
+                        <f:facet name="header">#{msg.workshop_process_standardCost}</f:facet>
+                        <h:outputText value="#{process.standardCost}">
+                            <f:convertNumber type="currency" currencySymbol="€ "/>
+                        </h:outputText>
+                    </bnu:dataTableColumn>
+                    <h:column>
+                        <f:facet name="header">#{msg.actions}</f:facet>
+                        <bnu:buttonGroup>
+                            <h:commandButton value="#{msg.delete}"
+                                             action="#{processPresenter.deleteProcess(process)}"
+                                             styleClass="btn btn-danger"/>
+                            <bnu:button value="#{msg.open}"
+                                        outcome="process"
+                                        look="primary">
+                                <f:param name="id" value="#{process.id}"/>
+                            </bnu:button>
+                        </bnu:buttonGroup>
+                    </h:column>
+                </bnu:dataTable>
+            </h:form>
+            <bnu:row>
+                <bnu:column col-xs="12" col-sm="6" col-md="4" col-lg="3">
+                    <bnu:button value="#{msg.item_tag_new}"
+                                outcome="process"
+                                look="primary"
+                                style-class="btn-block">
+                        <f:param name="id" value="0"/>
+                    </bnu:button>
+                </bnu:column>
+            </bnu:row>
+        </ui:define>
+    </ui:composition>
+</html>
+
