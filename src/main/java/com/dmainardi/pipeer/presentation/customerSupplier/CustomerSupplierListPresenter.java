@@ -18,9 +18,11 @@ package com.dmainardi.pipeer.presentation.customerSupplier;
 
 import com.dmainardi.pipeer.business.customerSupplier.boundary.CustomerSupplierService;
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -49,8 +51,13 @@ public class CustomerSupplierListPresenter implements Serializable{
     
     public void deleteCustomerSuppliers() {
         if (selectedCustomerSuppliers != null && !selectedCustomerSuppliers.isEmpty()) {
-            for (CustomerSupplier customerSupplierTemp : selectedCustomerSuppliers)
-                customerSupplierService.deleteCustomerSupplier(customerSupplierTemp.getId());
+            for (CustomerSupplier customerSupplierTemp : selectedCustomerSuppliers) {
+                try {
+                    customerSupplierService.deleteCustomerSupplier(customerSupplierTemp.getId());
+                } catch (EJBException e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+                }
+            }
         }
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before deleting"));

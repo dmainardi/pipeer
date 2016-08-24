@@ -21,7 +21,6 @@ import com.dmainardi.pipeer.business.user.entity.GroupApp;
 import com.dmainardi.pipeer.business.user.entity.UserApp;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

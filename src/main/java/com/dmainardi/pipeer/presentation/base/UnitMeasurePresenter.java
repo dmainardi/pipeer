@@ -67,7 +67,11 @@ public class UnitMeasurePresenter implements Serializable{
     }
     
     public void deleteUnitMeasure(UnitMeasure unitMeasure) {
-        service.deleteUnitMeasure(unitMeasure.getId());
+        try {
+            service.deleteUnitMeasure(unitMeasure.getId());
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+        }
     }
 
     public UnitMeasure getUnitMeasure() {

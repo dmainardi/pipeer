@@ -67,7 +67,11 @@ public class DeliveryMethodPresenter implements Serializable{
     }
     
     public void deleteDeliveryMethod(DeliveryMethod deliveryMethod) {
-        service.deleteDeliveryMethod(deliveryMethod.getId());
+        try {
+            service.deleteDeliveryMethod(deliveryMethod.getId());
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+        }
     }
 
     public DeliveryMethod getDeliveryMethod() {

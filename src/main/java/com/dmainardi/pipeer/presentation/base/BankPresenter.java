@@ -67,7 +67,11 @@ public class BankPresenter implements Serializable{
     }
     
     public void deleteBank(Bank bank) {
-        service.deleteBank(bank.getId());
+        try {
+            service.deleteBank(bank.getId());
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+        }
     }
 
     public Bank getBank() {

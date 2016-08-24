@@ -18,9 +18,11 @@ package com.dmainardi.pipeer.presentation.item;
 
 import com.dmainardi.pipeer.business.item.boundary.ItemService;
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -47,8 +49,13 @@ public class ItemListPresenter implements Serializable{
     
     public void deleteItems() {
         if (selectedItems != null && !selectedItems.isEmpty()) {
-            for (Item itemTemp : selectedItems)
-                itemService.deleteItem(itemTemp.getId());
+            for (Item itemTemp : selectedItems) {
+                try {
+                    itemService.deleteItem(itemTemp.getId());
+                } catch (EJBException e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+                }
+            }
         }
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before deleting"));

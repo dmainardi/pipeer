@@ -78,7 +78,11 @@ public class TagPresenter implements Serializable {
     }
     
     public void deleteTag(Tag tag) {
-        service.deleteTag(tag.getId());
+        try {
+            service.deleteTag(tag.getId());
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+        }
     }
 
     public Tag getTag() {

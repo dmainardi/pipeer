@@ -19,9 +19,11 @@ package com.dmainardi.pipeer.presentation.user;
 import com.dmainardi.pipeer.business.user.boundary.UserService;
 import com.dmainardi.pipeer.business.user.entity.UserApp;
 import com.dmainardi.pipeer.presentation.Authenticator;
+import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -54,8 +56,13 @@ public class ListUserPresenter implements Serializable{
             for (UserApp userTemp : selectedUsers)
                 if (userTemp.getUserName().equals(authenticator.getLoggedUser().getUserName()))
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error in deleting user", "You cannot delete yourself"));
-                else
-                    userService.deleteUserApp(userTemp);
+                else {
+                    try {
+                        userService.deleteUserApp(userTemp);
+                    } catch (EJBException e) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+                    }
+                }
             users = userService.listUserApps();
         }
         else

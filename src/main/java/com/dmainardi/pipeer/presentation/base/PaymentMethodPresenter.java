@@ -67,7 +67,11 @@ public class PaymentMethodPresenter implements Serializable{
     }
     
     public void deletePaymentMethod(PaymentMethod paymentMethod) {
-        service.deletePaymentMethod(paymentMethod.getId());
+        try {
+            service.deletePaymentMethod(paymentMethod.getId());
+        } catch (EJBException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+        }
     }
 
     public PaymentMethod getPaymentMethod() {
