@@ -19,10 +19,13 @@ package com.dmainardi.pipeer.presentation.workshop;
 import com.dmainardi.pipeer.business.workshop.boundary.ProcessService;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
+import com.dmainardi.pipeer.presentation.item.ItemPresenter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
+import javax.enterprise.context.ContextNotActiveException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -38,9 +41,26 @@ import javax.inject.Named;
 public class ProcessPresenter implements Serializable {
     @Inject
     ProcessService service;
+    @Inject
+    ItemPresenter itemPresenter;
     
     private Process process;
     private Long id;
+    
+    private String returnOutcome = "/secured/workshop/processes?faces-redirect=true";
+    private String returnOutcomeFromMethod = returnOutcome;
+    
+    @PostConstruct
+    public void init() {
+        try {
+            if (itemPresenter.getItem() != null) {
+                process = itemPresenter.getItem().getProcess();
+                returnOutcome = "/secured/item/item?faces-redirect=true";
+                returnOutcomeFromMethod = "openItem";
+            }
+        } catch (ContextNotActiveException e) { //item flow is not active
+        }
+    }
     
     public List<String> listProcessesStr(String query) {
         List<String> result = new ArrayList<>();
@@ -65,7 +85,7 @@ public class ProcessPresenter implements Serializable {
             return null;
         }
         
-        return "/secured/workshop/processes?faces-redirect=true";
+        return returnOutcomeFromMethod;
     }
     
     public void detailProcess() {
@@ -101,5 +121,10 @@ public class ProcessPresenter implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getReturnOutcome() {
+        return returnOutcome;
+    }
+    
 }
 

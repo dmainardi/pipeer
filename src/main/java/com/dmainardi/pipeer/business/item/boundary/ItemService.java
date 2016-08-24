@@ -48,11 +48,13 @@ public class ItemService {
     public Item saveItem(Item item) {
         //convert tags from csv to list (creating new ones)
         item.getTags().clear();
-        for (String tagToBeAdded : item.getTagsStrCSV().split(",")) {
-            Tag tag = tagService.findTag(tagToBeAdded.trim(), false);
-            if (tag == null)
-                tag = new Tag(tagToBeAdded.trim());
-            item.getTags().add(tag);
+        if (item.getTagsStrCSV() != null ) {
+            for (String tagToBeAdded : item.getTagsStrCSV().split(",")) {
+                Tag tag = tagService.findTag(tagToBeAdded.trim(), false);
+                if (tag == null)
+                    tag = new Tag(tagToBeAdded.trim());
+                item.getTags().add(tag);
+            }
         }
         
         if (item.getId() == null)

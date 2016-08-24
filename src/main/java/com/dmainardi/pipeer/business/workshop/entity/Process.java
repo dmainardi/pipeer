@@ -18,6 +18,7 @@ package com.dmainardi.pipeer.business.workshop.entity;
 
 import com.dmainardi.pipeer.business.entity.BaseEntity;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,12 @@ public class Process extends BaseEntity<Long>{
     private int version;
 
     public Process() {
+        standardCost = new BigDecimal(BigInteger.ZERO);
+    }
+
+    public Process(String name) {
+        this();
+        this.name = name;
     }
 
     public String getName() {

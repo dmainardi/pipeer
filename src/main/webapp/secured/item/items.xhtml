@@ -19,7 +19,7 @@
                         <p:commandButton value="#{msg.delete}" actionListener="#{itemListPresenter.deleteItems()}" update="@form">
                             <p:confirm header="#{msg.item_items_delete}" message="#{msg.item_items_delete_tip}" icon="ui-icon-alert"/>
                         </p:commandButton>
-                        <h:button value="#{msg.new}" styleClass="btn btn-default btn-sm" outcome="item">
+                        <h:button value="#{msg.new}" styleClass="btn btn-default btn-sm" outcome="itemF">
                             <f:param name="id" value="0" />
                         </h:button>
                     </f:facet>
@@ -36,7 +36,7 @@
                         <h:outputText value="#{item.unitMeasure.symbol}"/>
                     </p:column>
                     <p:column headerText="#{msg.actions}" priority="0">
-                        <h:button value="#{msg.edit}" styleClass="btn btn-default btn-sm" outcome="item">
+                        <h:button value="#{msg.edit}" styleClass="btn btn-default btn-sm" outcome="itemF">
                             <f:param name="id" value="#{item.id}" />
                         </h:button>
                     </p:column>

@@ -17,15 +17,14 @@
 package com.dmainardi.pipeer.presentation.item;
 
 import com.dmainardi.pipeer.business.item.boundary.ItemService;
-import com.dmainardi.pipeer.business.item.boundary.TagService;
 import com.dmainardi.pipeer.business.item.entity.Item;
-import com.dmainardi.pipeer.business.item.entity.Tag;
+import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,17 +33,22 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@ViewScoped
+@FlowScoped("itemF")
 public class ItemPresenter implements Serializable {
 
     @Inject
     ItemService service;
-    
-    @Inject
-    TagService tagService;
 
     private Item item;
     private Long id;
+    
+    public String detailProcess(Process processBeingOpened) {
+        if (processBeingOpened == null)
+            item.setProcess(new Process(item.getName()));
+        else
+            item.setProcess(processBeingOpened);
+        return "openProcess";
+    }
 
     public String saveItem() {
         try {
@@ -54,7 +58,7 @@ public class ItemPresenter implements Serializable {
             return null;
         }
 
-        return "/secured/item/items?faces-redirect=true";
+        return "exitFlow";
     }
 
     public void detailItem() {
@@ -66,10 +70,6 @@ public class ItemPresenter implements Serializable {
             }
             id = null;
         }
-    }
-
-    public void deleteItem(Item item) {
-        service.deleteItem(item.getId());
     }
 
     public Item getItem() {
