@@ -16,11 +16,12 @@
  */
 package com.dmainardi.pipeer.presentation.item;
 
+import com.dmainardi.pipeer.business.item.boundary.ItemService;
 import com.dmainardi.pipeer.business.item.boundary.TagService;
+import com.dmainardi.pipeer.business.item.entity.Item;
 import com.dmainardi.pipeer.business.item.entity.Tag;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
-import java.util.List;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -34,59 +35,49 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class TagPresenter implements Serializable {
+public class ItemPresenter implements Serializable {
+
     @Inject
-    TagService service;
+    ItemService service;
     
-    private Tag tag;
+    @Inject
+    TagService tagService;
+
+    private Item item;
     private Long id;
-    
-    public List<Tag> listTags() {
-        return service.listTags();
-    }
-    
-    public String listTagsStrCSV() {
-        StringBuilder b = new StringBuilder();
-        for (Tag tagTemp : service.listTags()) {
-            if (b.length() > 0)
-                b.append(",");
-            b.append(tagTemp.getName());
-        }
-        
-        return b.toString();
-    }
-    
-    public String saveTag() {
+
+    public String saveItem() {
         try {
-            service.saveTag(tag);
+            service.saveItem(item);
         } catch (EJBException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
             return null;
         }
-        
-        return "/secured/item/tags?faces-redirect=true";
+
+        return "/secured/item/items?faces-redirect=true";
     }
-    
-    public void detailTag() {
+
+    public void detailItem() {
         if (id != null) {
-            if (id == 0)
-                tag = new Tag();
-            else
-                tag = service.readTag(id);
+            if (id == 0) {
+                item = new Item();
+            } else {
+                item = service.readItem(id);
+            }
             id = null;
         }
     }
-    
-    public void deleteTag(Tag tag) {
-        service.deleteTag(tag.getId());
+
+    public void deleteItem(Item item) {
+        service.deleteItem(item.getId());
     }
 
-    public Tag getTag() {
-        return tag;
+    public Item getItem() {
+        return item;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public Long getId() {

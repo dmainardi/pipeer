@@ -16,14 +16,21 @@
  */
 package com.dmainardi.pipeer.business.item.boundary;
 
+import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier_;
+import static com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier_.isCustomer;
 import com.dmainardi.pipeer.business.item.entity.Tag;
+import com.dmainardi.pipeer.business.item.entity.Tag_;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -59,5 +66,32 @@ public class TagService implements Serializable {
         CriteriaQuery<Tag> select = query.select(root).distinct(true);
 
         return em.createQuery(select).getResultList();
+    }
+    
+    public Tag findTag(String name, boolean isCaseSensitive) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tag> query = cb.createQuery(Tag.class);
+        Root<Tag> root = query.from(Tag.class);
+        CriteriaQuery<Tag> select = query.select(root).distinct(true);
+        
+        List<Predicate> conditions = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            if (isCaseSensitive)
+                conditions.add(cb.equal(root.get(Tag_.name), name));
+            else
+                conditions.add(cb.equal(cb.lower(root.get(Tag_.name)), name.toLowerCase()));
+        }
+        
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
+        
+        try {
+            return em.createQuery(select).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return em.createQuery(select).getResultList().get(0);
+        }
     }
 }

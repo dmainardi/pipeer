@@ -46,3 +46,6 @@ INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1003, 1002, 'p
 INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1004, 1002, 'p004', 'Pipe 6.17', 0)
 INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1005, 1003, 'l001', 'Liquid C10', 0)
 INSERT INTO item(id, unitMeasure_id, code, name, version) VALUES (1006, 1003, 'l002', 'Liquid A008', 0)
+
+INSERT INTO item_tag(item_id, tags_id) VALUES(1006, 1001)
+INSERT INTO item_tag(item_id, tags_id) VALUES(1006, 1003)

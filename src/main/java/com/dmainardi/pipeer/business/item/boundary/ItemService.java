@@ -17,11 +17,13 @@
 package com.dmainardi.pipeer.business.item.boundary;
 
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.business.item.entity.Tag;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -39,8 +41,20 @@ public class ItemService {
 
     @PersistenceContext
     EntityManager em;
+    
+    @Inject
+    TagService tagService;
 
     public Item saveItem(Item item) {
+        //convert tags from csv to list (creating new ones)
+        item.getTags().clear();
+        for (String tagToBeAdded : item.getTagsStrCSV().split(",")) {
+            Tag tag = tagService.findTag(tagToBeAdded.trim(), false);
+            if (tag == null)
+                tag = new Tag(tagToBeAdded.trim());
+            item.getTags().add(tag);
+        }
+        
         if (item.getId() == null)
             em.persist(item);
         else

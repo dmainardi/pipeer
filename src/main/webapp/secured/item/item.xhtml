@@ -1,12 +1,79 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <f:metadata>
+        <f:viewParam name="id"
+                     value="#{itemPresenter.id}"
+                     converter="javax.faces.Long"/>
+        <f:viewAction action="#{itemPresenter.detailItem()}"/>
+    </f:metadata>
     <ui:composition template="/template/main.xhtml">
-        <ui:define name="contentTitle">TODO</ui:define>
-        <ui:define name="contentSubtitle">TODO</ui:define>
+        <ui:define name="contentTitle">#{msg.item_item}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.item_item_tip}</ui:define>
         <ui:define name="content">
-            TODO
+            <h:form>
+                <bnu:row>
+                    <bnu:column colMd="4">
+                        <h:outputLabel for="code" value="#{msg.item_item_code}"/>
+                        <bnu:message for="code"/>
+                        <bnu:inputText id="code"
+                                       value="#{itemPresenter.item.code}"
+                                       maxlength="#{itemPresenter.item.maxCodeTextSize}"/>
+                    </bnu:column>
+                    <bnu:column colMd="4">
+                        <h:outputLabel for="warehouseCode" value="#{msg.item_item_warehouseCode}"/>
+                        <bnu:message for="warehouseCode"/>
+                        <bnu:inputText id="warehouseCode" value="#{itemPresenter.item.warehouseCode}"/>
+                    </bnu:column>
+                    <bnu:column colMd="4">
+                        <h:outputLabel for="unitMeasure" value="#{msg.base_unitMeasure}"/>
+                        <bnu:message for="unitMeasure"/>
+                        <h:selectOneMenu id="unitMeasure"
+                                         value="#{itemPresenter.item.unitMeasure}"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         styleClass="form-control">
+                            <f:selectItem itemLabel="#{msg.base_unitMeasure_noSelection}" noSelectionOption="true"/>
+                            <f:selectItems value="#{unitMeasurePresenter.listUnitMeasures()}"
+                                           var="unitMeasure"
+                                           itemLabel="#{unitMeasure.name}"
+                                           itemValue="#{unitMeasure}"/>
+                        </h:selectOneMenu>
+                    </bnu:column>
+                </bnu:row>
+                <bnu:row>
+                    <bnu:column>
+                        <h:outputLabel for="name" value="#{msg.item_item_name}"/>
+                        <bnu:message for="name"/>
+                        <bnu:inputText id="name" value="#{itemPresenter.item.name}"/>
+                    </bnu:column>
+                </bnu:row>
+                <bnu:row>
+                    <bnu:column>
+                        <h:outputLabel for="tags" value="#{msg.item_tags}"/>
+                        <bnu:message for="tags"/>
+                        <bnu:inputText id="tags"
+                                       value="#{itemPresenter.item.tagsStr}"
+                                       tags="true"
+                                       typeahead="true"
+                                       typeaheadValues="#{tagPresenter.listTagsStrCSV()}"/>
+                    </bnu:column>
+                </bnu:row>
+                <bnu:row>
+                    <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+                        <bnu:button value="#{msg.cancel}" outcome="/secured/item/items" styleClass="btn-block"/>
+                    </bnu:column>
+                    <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+                        <h:commandButton
+                            value="#{msg.save}"
+                            action="#{itemPresenter.saveItem()}"
+                            styleClass="btn btn-block btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+            </h:form>
         </ui:define>
     </ui:composition>        
 </html>

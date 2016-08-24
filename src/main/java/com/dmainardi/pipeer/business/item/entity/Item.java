@@ -63,6 +63,9 @@ public class Item extends BaseEntity<Long>{
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Tag> tags;
     
+    @Transient
+    private String tagsStr;
+    
     @Version
     private int version;
 
@@ -121,6 +124,27 @@ public class Item extends BaseEntity<Long>{
 
     public int getMaxCodeTextSize() {
         return maxCodeTextSize;
+    }
+
+    public String getTagsStr() {
+        StringBuilder b = new StringBuilder();
+        for (Tag tag : tags) {
+            if (b.length() > 0)
+                b.append(",");
+            b.append(tag.getName());
+        }
+        
+        tagsStr = b.toString();
+        
+        return tagsStr;
+    }
+    
+    public String getTagsStrCSV() {
+        return tagsStr;
+    }
+
+    public void setTagsStr(String tagsStr) {
+        this.tagsStr = tagsStr;
     }
     
 }

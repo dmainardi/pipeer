@@ -44,6 +44,11 @@ public class Tag extends BaseEntity<Long>{
     public Tag() {
     }
 
+    public Tag(String name) {
+        this();
+        this.name = name;
+    }
+
     @Override
     public Long getId() {
         return id;
