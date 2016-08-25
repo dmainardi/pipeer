@@ -14,29 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dmainardi.pipeer.presentation.item;
+package com.dmainardi.pipeer.business.billMaterials.entity;
 
-import javax.enterprise.inject.Produces;
-import javax.faces.flow.Flow;
-import javax.faces.flow.builder.FlowBuilder;
-import javax.faces.flow.builder.FlowBuilderParameter;
-import javax.faces.flow.builder.FlowDefinition;
+import java.util.Date;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
 
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class ItemFlow {
-    @Produces
-    @FlowDefinition
-    public Flow defineItemFlow(@FlowBuilderParameter FlowBuilder flowBuilder) {
-        flowBuilder.id("", "itemF");
-
-        flowBuilder.viewNode("openItem", "/secured/item/item.xhtml").markAsStartNode();
-        flowBuilder.viewNode("openProcess", "/secured/workshop/process.xhtml");
-
-        flowBuilder.returnNode("exitFlow").fromOutcome("items");
-
-        return flowBuilder.getFlow();
-    }
+@StaticMetamodel(BillMaterials.class)
+public class BillMaterials_ {
+    public static volatile SingularAttribute<BillMaterials, Integer> number;
+    public static volatile SingularAttribute<BillMaterials, Date> creationDate;
 }

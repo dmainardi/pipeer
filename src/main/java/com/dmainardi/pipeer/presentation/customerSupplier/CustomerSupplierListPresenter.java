@@ -20,7 +20,9 @@ import com.dmainardi.pipeer.business.customerSupplier.boundary.CustomerSupplierS
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
@@ -61,6 +63,13 @@ public class CustomerSupplierListPresenter implements Serializable{
         }
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before deleting"));
+    }
+    
+    public List<CustomerSupplier> completeCustomer(String query) {
+        String field = "name";
+        Map<String, Object> filter = new HashMap<>();
+        filter.put(field, query);
+        return customerSupplierService.listCustomerSuppliers(Boolean.TRUE, null, 0, 10, filter, field, Boolean.TRUE);
     }
 
     public CustomerSupplierLazyDataModel getLazySuppliers() {
