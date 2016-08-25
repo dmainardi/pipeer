@@ -19,15 +19,18 @@ package com.dmainardi.pipeer.business.billMaterials.entity;
 import com.dmainardi.pipeer.business.customerSupplier.entity.Plant;
 import com.dmainardi.pipeer.business.entity.BaseEntity;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -41,12 +44,12 @@ public class BillMaterials extends BaseEntity<Long>{
     private Long id;
     
     @NotNull
-    @Min(0)
+    @DecimalMin(value = "0")
     @Column(nullable = false)
     private Integer number;
     
     @NotNull
-    @Min(0)
+    @DecimalMin(value = "0")
     @Column(nullable = false)
     private Integer revision;
     
@@ -65,6 +68,10 @@ public class BillMaterials extends BaseEntity<Long>{
     
     private String notes;
     
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Node root;
+    
     @Version
     private int version;
 
@@ -72,6 +79,9 @@ public class BillMaterials extends BaseEntity<Long>{
         number = 0;
         revision = 0;
         creationDate = new Date();
+        root = new GroupNode();
+        ((GroupNode)root).setDescription("Root node");
+        root.setBillMaterials(this);
     }
 
     public Integer getNumber() {
@@ -133,6 +143,14 @@ public class BillMaterials extends BaseEntity<Long>{
     @Override
     public Long getId() {
         return id;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
     }
     
 }
