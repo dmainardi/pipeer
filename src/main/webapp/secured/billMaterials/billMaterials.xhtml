@@ -19,72 +19,87 @@
         <ui:define name="content">
             <h:form>
                 <bnu:row>
-                    <bnu:column colMd="4">
+                    <bnu:column colXs="6">
                         <h:outputLabel for="number" value="#{msg.billMaterials_billMaterials_number}"/>
                         <bnu:message for="number"/>
                         <h:outputText id="number" value="#{billMaterialsPresenter.billMaterials.number}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </bnu:column>
-                    <bnu:column colMd="4">
+                    <bnu:column colXs="6">
                         <h:outputLabel for="revision" value="#{msg.billMaterials_billMaterials_revision}"/>
                         <bnu:message for="revision"/>
                         <h:outputText id="revision" value="#{billMaterialsPresenter.billMaterials.revision}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </bnu:column>
-                    <bnu:column colMd="4">
-                        <h:outputLabel for="creationDate" value="#{msg.billMaterials_billMaterials_creationDate}"/>
-                        <bnu:message for="creationDate"/>
-                        <bnu:dateTimePicker id="creationDate"
-                                            value="#{billMaterialsPresenter.billMaterials.creationDate}"
-                                            showTime="false"/>
-                    </bnu:column>
                 </bnu:row>
-                <bnu:row>
-                    <bnu:column colMd="6">
-                        <h:outputLabel for="customerAuto" value="#{msg.customerSupplier_customer}"/>
-                        <bnu:message for="customerAuto"/>
-                        <p:autoComplete id="customerAuto"
-                                        style="width: 100%"
-                                        inputStyle="width: 100%"
-                                        dropdown="true"
-                                        value="#{billMaterialsPresenter.customer}"
-                                        completeMethod="#{customerSupplierListPresenter.completeCustomer}"
-                                        var="customer"
-                                        itemLabel="#{customer.name}"
-                                        itemValue="#{customer}"
-                                        forceSelection="true">
-                            <o:converter converterId="omnifaces.ListConverter"
-                                         list="#{customerSupplierListPresenter.completeCustomer(customer.name)}"/>
-                            <p:ajax event="itemSelect"
-                                    update="plant"/>
-                        </p:autoComplete>
-                    </bnu:column>
-                    <bnu:column colMd="6">
-                        <h:outputLabel for="plant" value="#{msg.customerSupplier_plant}"/>
-                        <bnu:message for="plant"/>
-                        <h:selectOneMenu id="plant"
-                                         value="#{billMaterialsPresenter.billMaterials.plant}"
-                                         converter="omnifaces.SelectItemsConverter"
-                                         styleClass="form-control">
-                            <f:selectItem itemLabel="Seleziona uno stabilimento" noSelectionOption="true"/>
-                            <f:selectItems value="#{billMaterialsPresenter.customer.plants}"
-                                           var="plant"
-                                           itemLabel="#{plant.name} - #{plant.address}"
-                                           itemValue="#{plant}"/>
-                        </h:selectOneMenu>
-                    </bnu:column>
-                </bnu:row>
-                <bnu:row>
-                    <bnu:column>
-                    <h:outputLabel for="name" value="#{msg.billMaterials_billMaterials_name}"/>
-                    <bnu:message for="name"/>
-                    <bnu:inputTextarea id="name"
-                                       value="#{billMaterialsPresenter.billMaterials.name}"
-                                       rows="3"/>
-                    </bnu:column>
-                </bnu:row>
+                <p:tabView dynamic="true" cache="true">
+                    <p:tab title="#{msg.billMaterials_billMaterials_header}">
+                        <bnu:row>
+                            <bnu:column colMd="4">
+                                <h:outputLabel for="creationDate" value="#{msg.billMaterials_billMaterials_creationDate}"/>
+                                <bnu:message for="creationDate"/>
+                                <bnu:dateTimePicker id="creationDate"
+                                                    value="#{billMaterialsPresenter.billMaterials.creationDate}"
+                                                    showTime="false"/>
+                            </bnu:column>
+                            <bnu:column colMd="4" colSm="6">
+                                <h:outputLabel for="customerAuto" value="#{msg.customerSupplier_customer}"/>
+                                <bnu:message for="customerAuto"/>
+                                <p:autoComplete id="customerAuto"
+                                                style="width: 100%"
+                                                inputStyle="width: 100%"
+                                                dropdown="true"
+                                                value="#{billMaterialsPresenter.customer}"
+                                                completeMethod="#{customerSupplierListPresenter.completeCustomer}"
+                                                var="customer"
+                                                itemLabel="#{customer.name}"
+                                                itemValue="#{customer}"
+                                                forceSelection="true">
+                                    <o:converter converterId="omnifaces.ListConverter"
+                                                 list="#{customerSupplierListPresenter.completeCustomer(customer.name)}"/>
+                                    <p:ajax event="itemSelect"
+                                            update="plant"/>
+                                </p:autoComplete>
+                            </bnu:column>
+                            <bnu:column colMd="4" colSm="6">
+                                <h:outputLabel for="plant" value="#{msg.customerSupplier_plant}"/>
+                                <bnu:message for="plant"/>
+                                <h:selectOneMenu id="plant"
+                                                 value="#{billMaterialsPresenter.billMaterials.plant}"
+                                                 converter="omnifaces.SelectItemsConverter"
+                                                 styleClass="form-control">
+                                    <f:selectItem itemLabel="Seleziona uno stabilimento" noSelectionOption="true"/>
+                                    <f:selectItems value="#{billMaterialsPresenter.customer.plants}"
+                                                   var="plant"
+                                                   itemLabel="#{plant.name} - #{plant.address}"
+                                                   itemValue="#{plant}"/>
+                                </h:selectOneMenu>
+                            </bnu:column>
+                        </bnu:row>
+                        <bnu:row>
+                            <bnu:column>
+                                <h:outputLabel for="name" value="#{msg.billMaterials_billMaterials_name}"/>
+                                <bnu:message for="name"/>
+                                <bnu:inputTextarea id="name"
+                                                   value="#{billMaterialsPresenter.billMaterials.name}"
+                                                   rows="3"/>
+                            </bnu:column>
+                        </bnu:row>
+                    </p:tab>
+                    <p:tab title="#{msg.billMaterials_billMaterials_content}">
+                        
+                    </p:tab>
+                    <p:tab title="#{msg.billMaterials_billMaterials_notes}">
+                        <bnu:row>
+                            <h:outputLabel for="notes" value="#{msg.billMaterials_billMaterials_notes}"/>
+                            <bnu:message for="notes"/>
+                            <bnu:inputTextarea id="notes"
+                                               value="#{billMaterialsPresenter.billMaterials.notes}"/>
+                        </bnu:row>                        
+                    </p:tab>
+                </p:tabView>
                 <bnu:row>
                     <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
                         <h:button value="#{msg.cancel}" outcome="exitFlow" styleClass="btn-block btn btn-default"/>
