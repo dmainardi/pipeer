@@ -18,7 +18,8 @@ package com.dmainardi.pipeer.business.billMaterials.boundary;
 
 import com.dmainardi.pipeer.business.billMaterials.entity.BillMaterials;
 import com.dmainardi.pipeer.business.billMaterials.entity.BillMaterials_;
-import java.text.SimpleDateFormat;
+import com.dmainardi.pipeer.business.billMaterials.entity.Node;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -46,6 +47,7 @@ public class BillMaterialsService {
     EntityManager em;
 
     public BillMaterials saveBillMaterials(BillMaterials billMaterials) {
+        updateNodeAmounts(billMaterials.getRoot());
         if (billMaterials.getId() == null) {
             billMaterials.setNumber(getNextNumber());
             em.persist(billMaterials);
@@ -55,6 +57,17 @@ public class BillMaterialsService {
 
         return null;
     }
+    
+    private void updateNodeAmounts(Node current) {
+        double totalAmount = 0.0;
+        if (current.getChildren() != null && !current.getChildren().isEmpty()) {
+            for (Node child : current.getChildren()) {
+                updateNodeAmounts(child);
+                totalAmount +=child.getTotal().doubleValue();
+            }
+            current.setPrice(new BigDecimal(totalAmount));
+        }
+}
     
     private Integer getNextNumber() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -146,5 +159,12 @@ public class BillMaterialsService {
         }
 
         return em.createQuery(select).getSingleResult();
+    }
+    
+    public void deleteNode(Node node, Node root) {
+        node.getChildren().clear();
+        node.getFather().getChildren().remove(node);
+        node.setFather(null);
+        updateNodeAmounts(root);
     }
 }

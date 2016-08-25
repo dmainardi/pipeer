@@ -19,6 +19,7 @@ package com.dmainardi.pipeer.business.item.entity;
 import com.dmainardi.pipeer.business.base.entity.UnitMeasure;
 import com.dmainardi.pipeer.business.entity.BaseEntity;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -31,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,6 +48,8 @@ public class Item extends BaseEntity<Long>{
     
     @Transient
     private final int maxCodeTextSize = 50;
+    @Transient
+    private final int scalePrice = 2;
     
     @NotNull
     @Size(max = maxCodeTextSize)
@@ -57,6 +61,11 @@ public class Item extends BaseEntity<Long>{
     @NotNull
     @Column(nullable = false)
     private String name;
+    
+    @NotNull
+    @DecimalMin(value = "0")
+    @Column(nullable = false, scale = scalePrice)
+    private BigDecimal price;
     
     @NotNull
     @ManyToOne(optional = false)
@@ -158,6 +167,14 @@ public class Item extends BaseEntity<Long>{
 
     public void setProcess(Process process) {
         this.process = process;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
     
 }
