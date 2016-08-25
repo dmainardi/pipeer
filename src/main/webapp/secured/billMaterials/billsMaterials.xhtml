@@ -38,7 +38,7 @@
                     </p:column>
                     <p:column headerText="#{msg.billMaterials_billMaterials_creationDate}" filterBy="#{bill.creationDate}" sortBy="#{bill.creationDate}" priority="1">
                         <h:outputText value="#{bill.creationDate}">
-                            <f:convertDateTime />
+                            <f:convertDateTime pattern="dd/MM/YYYY" />
                         </h:outputText>
                     </p:column>
                     <p:column headerText="#{msg.billMaterials_billMaterials_name}" filterBy="#{bill.name}" sortBy="#{bill.name}" priority="2">
