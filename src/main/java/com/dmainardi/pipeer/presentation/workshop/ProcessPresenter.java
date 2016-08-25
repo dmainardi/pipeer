@@ -65,7 +65,7 @@ public class ProcessPresenter implements Serializable {
     public List<String> listProcessesStr(String query) {
         List<String> result = new ArrayList<>();
         
-        List<Process> processes = service.listProcesses(query);
+        List<Process> processes = service.listProcesses(query, true);
         if (processes != null && !processes.isEmpty())
             for (Process processTemp : processes)
                 result.add(processTemp.getName());
@@ -74,7 +74,11 @@ public class ProcessPresenter implements Serializable {
     }
     
     public List<Process> listProcesses() {
-        return service.listProcesses(null);
+        return service.listProcesses(null, false);
+    }
+    
+    public List<Process> completeProcess(String query) {
+        return service.listProcesses(query, false);
     }
     
     public String saveProcess() {

@@ -46,6 +46,8 @@
                         <h:outputLabel for="customerAuto" value="#{msg.customerSupplier_customer}"/>
                         <bnu:message for="customerAuto"/>
                         <p:autoComplete id="customerAuto"
+                                        style="width: 100%"
+                                        inputStyle="width: 100%"
                                         dropdown="true"
                                         value="#{billMaterialsPresenter.customer}"
                                         completeMethod="#{customerSupplierListPresenter.completeCustomer}"

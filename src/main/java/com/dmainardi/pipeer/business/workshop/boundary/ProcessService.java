@@ -55,15 +55,19 @@ public class ProcessService implements Serializable {
         em.remove(readProcess(id));
     }
 
-    public List<Process> listProcesses(String name) {
+    public List<Process> listProcesses(String name, boolean searchExactName) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Process> query = cb.createQuery(Process.class);
         Root<Process> root = query.from(Process.class);
         CriteriaQuery<Process> select = query.select(root).distinct(true);
         
         List<Predicate> conditions = new ArrayList<>();
-        if (name != null && !name.isEmpty())
-            conditions.add(cb.equal(cb.lower(root.get(Process_.name)), name.toLowerCase()));
+        if (name != null && !name.isEmpty()) {
+            if (searchExactName)
+                conditions.add(cb.equal(cb.lower(root.get(Process_.name)), name.toLowerCase()));
+            else
+                conditions.add(cb.like(cb.lower(root.get(Process_.name)), "%" + name.toLowerCase() + "%"));
+        }
         
         if (!conditions.isEmpty()) {
             query.where(conditions.toArray(new Predicate[conditions.size()]));

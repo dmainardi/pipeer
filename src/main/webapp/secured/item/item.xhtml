@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:bnu="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
     <f:metadata>
         <f:viewParam name="id"
                      value="#{itemPresenter.id}"
@@ -56,17 +57,19 @@
                     <bnu:column colMd="8" colSm="6">
                         <h:outputLabel for="linkedProcess" value="#{msg.item_item_linkedProcess}"/>
                         <bnu:message for="linkedProcess"/>
-                        <p:selectOneMenu id="linkedProcess"
-                                         value="#{itemPresenter.item.process}"
-                                         converter="omnifaces.SelectItemsConverter"
-                                         filter="true"
-                                         filterMatchMode="contains">
-                            <f:selectItem itemLabel="#{msg.workshop_process_noSelection}" noSelectionOption="true"/>
-                            <f:selectItems value="#{processPresenter.listProcesses()}"
-                                           var="process"
-                                           itemLabel="#{process.name}"
-                                           itemValue="#{process}"/>
-                        </p:selectOneMenu>
+                        <p:autoComplete id="linkedProcess"
+                                        style="width: 100%"
+                                        inputStyle="width: 100%"
+                                        dropdown="true"
+                                        value="#{itemPresenter.item.process}"
+                                        completeMethod="#{processPresenter.completeProcess}"
+                                        var="process"
+                                        itemLabel="#{process.name}"
+                                        itemValue="#{process}"
+                                        forceSelection="true">
+                            <o:converter converterId="omnifaces.ListConverter"
+                                         list="#{processPresenter.completeProcess(process.name)}"/>
+                        </p:autoComplete>
                     </bnu:column>
                     <bnu:column colMd="4" colSm="6">
                         <h:commandButton value="#{msg.workshop_process_new}"
