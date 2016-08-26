@@ -67,6 +67,8 @@ public class BillMaterialsPresenter implements Serializable {
     private TreeNode selectedNode;
     private Process selectedProcess;
     private Item selectedItem;
+    
+    private Integer tabActiveIndex;
 
     public String saveBillMaterials() {
         try {
@@ -273,6 +275,14 @@ public class BillMaterialsPresenter implements Serializable {
 
     public void setSelectedItem(Item selectedItem) {
         this.selectedItem = selectedItem;
+    }
+
+    public Integer getTabActiveIndex() {
+        return tabActiveIndex;
+    }
+
+    public void setTabActiveIndex(Integer tabActiveIndex) {
+        this.tabActiveIndex = tabActiveIndex;
     }
     
 }

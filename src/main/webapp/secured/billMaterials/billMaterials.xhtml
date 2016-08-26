@@ -34,7 +34,9 @@
                         </h:outputText>
                     </bnu:column>
                 </bnu:row>
-                <p:tabView dynamic="true" cache="true">
+                <p:tabView dynamic="true"
+                           cache="true"
+                           activeIndex="#{billMaterialsPresenter.tabActiveIndex}">
                     <p:tab title="#{msg.billMaterials_billMaterials_header}">
                         <bnu:row>
                             <bnu:column colMd="4">
