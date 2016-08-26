@@ -25,6 +25,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -45,6 +46,7 @@ import javax.validation.constraints.NotNull;
 @DiscriminatorColumn
 public abstract class Node extends BaseEntity<Long>{
     @Id
+    @GeneratedValue
     private Long id;
     
     @Transient
