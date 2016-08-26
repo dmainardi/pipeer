@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.billMaterials_processNode}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.billMaterials_processNode_tip}</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <bnu:row>
+                    <bnu:column colMd="8" colSm="6">
+                        <h:outputLabel for="process" value="#{msg.workshop_process_noSelection}"/>
+                        <bnu:message for="process"/>
+                        <p:autoComplete id="process"
+                                        style="width: 100%"
+                                        inputStyle="width: 100%"
+                                        dropdown="true"
+                                        value="#{billMaterialsPresenter.selectedProcess}"
+                                        completeMethod="#{processPresenter.completeProcess}"
+                                        var="process"
+                                        itemLabel="#{process.name}"
+                                        itemValue="#{process}"
+                                        forceSelection="true">
+                            <o:converter converterId="omnifaces.ListConverter"
+                                         list="#{processPresenter.completeProcess(process.name)}"/>
+                            <p:ajax event="itemSelect"
+                                    listener="#{billMaterialsPresenter.onProcessSelect}"
+                                    update="price" />
+                        </p:autoComplete>
+                    </bnu:column>
+                    <bnu:column colMd="4" colSm="6">
+                        <h:commandButton value="#{msg.workshop_process_new}"
+                                         styleClass="btn-block btn btn-primary"/>
+                    </bnu:column>
+                </bnu:row>
+                <ui:include src="commonNodeFieldsTemplate.xhtml"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

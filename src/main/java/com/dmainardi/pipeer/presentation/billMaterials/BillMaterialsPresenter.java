@@ -203,7 +203,9 @@ public class BillMaterialsPresenter implements Serializable {
     }
     
     public void onProcessSelect(SelectEvent event) {
+        Process element = (Process) event.getObject();
         ((ProcessNode) node).setProcess((Process) event.getObject());
+        node.setPrice(new BigDecimal(element.getStandardCost().doubleValue()));
     }
 
     public void onItemSelect(SelectEvent event) {
