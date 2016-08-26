@@ -137,13 +137,13 @@ public class BillMaterialsPresenter implements Serializable {
         switch (nodeType) {
             case ITEM_NODE:
                 node = new ItemNode();
-                return "itemNode?faces-redirect=true";
+                return "openItemNode";
             case GROUP_NODE:
                 node = new GroupNode();
-                return "groupNode?faces-redirect=true";
+                return "openGroupNode";
             case PROCESS_NODE:
                 node = new ProcessNode();
-                return "processNode?faces-redirect=true";
+                return "openProcessNode";
             default:
                 return null;
         }
@@ -155,14 +155,14 @@ public class BillMaterialsPresenter implements Serializable {
                 case "itm":
                     node = (ItemNode) selectedNode.getData();
                     selectedItem = ((ItemNode) node).getItem();
-                    return "itemNode?faces-redirect=true";
+                    return "openItemNode";
                 case "grp":
                     node = (GroupNode) selectedNode.getData();
-                    return "groupNode?faces-redirect=true";
+                    return "openGroupNode";
                 case "prc":
                     node = (ProcessNode) selectedNode.getData();
                     selectedProcess = ((ProcessNode) node).getProcess();
-                    return "processNode?faces-redirect=true";
+                    return "openProcessNode";
                 default:
                     return null;
             }
@@ -176,7 +176,7 @@ public class BillMaterialsPresenter implements Serializable {
         if (node.getFather() == null)
             insertIntoTree();
         
-        return "billMaterials?faces-redirect=true";
+        return "openBillMaterials";
     }
 
     private void insertIntoTree() {

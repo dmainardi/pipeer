@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:bnu="http://bootsfaces.net/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <bnu:row>
+        <bnu:column colXs="6">
+            <h:outputLabel for="qty" value="#{msg.billMaterials_node_quantity}"/>
+            <bnu:message for="qty"/>
+            <bnu:inputText id="qty"
+                           value="#{billMaterialsPresenter.node.qty}"
+                           pt:type="number"
+                           pt:step="#{Math.pow(10, -billMaterialsPresenter.node.scaleQty)}"
+                           converter="javax.faces.BigDecimal">
+            </bnu:inputText>
+        </bnu:column>
+        <bnu:column colXs="6">
+            <h:outputLabel for="price" value="#{msg.billMaterials_node_cost}"/>
+            <bnu:message for="price"/>
+            <bnu:inputText id="price"
+                           value="#{billMaterialsPresenter.node.price}"
+                           pt:type="number"
+                           pt:step="#{Math.pow(10, -billMaterialsPresenter.node.scalePrice)}"
+                           converter="javax.faces.BigDecimal">
+                <f:facet name="prepend">
+                    <h:outputText value="€" />
+                </f:facet>
+            </bnu:inputText>
+        </bnu:column>
+    </bnu:row>
+    <bnu:row>
+        <bnu:column>
+            <h:outputLabel for="notes" value="#{msg.billMaterials_node_notes}"/>
+            <bnu:message for="notes"/>
+            <bnu:inputTextarea id="notes"
+                               value="#{billMaterialsPresenter.node.notes}"
+                               rows="3"/>
+        </bnu:column>
+    </bnu:row>
+    <bnu:row>
+        <bnu:column offsetSm="1" colSm="4" offsetMd="2" colMd="3">
+            <h:button value="#{msg.cancel}" outcome="/secured/billMaterials/billMaterials?faces-redirect=true" styleClass="btn-block btn btn-default"/>
+        </bnu:column>
+        <bnu:column offsetSm="2" colSm="4" offsetMd="2" colMd="3">
+            <h:commandButton
+                value="#{msg.save}"
+                action="#{billMaterialsPresenter.saveNode()}"
+                styleClass="btn btn-block btn-primary"/>
+        </bnu:column>
+    </bnu:row>
+</ui:composition>
