@@ -6,7 +6,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:bnu="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui">
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <f:metadata>
         <f:viewParam name="id"
                      value="#{itemPresenter.id}"
@@ -26,12 +27,12 @@
                                        value="#{itemPresenter.item.code}"
                                        maxlength="#{itemPresenter.item.maxCodeTextSize}"/>
                     </bnu:column>
-                    <bnu:column colMd="4">
+                    <bnu:column colMd="4" colSm="7">
                         <h:outputLabel for="warehouseCode" value="#{msg.item_item_warehouseCode}"/>
                         <bnu:message for="warehouseCode"/>
                         <bnu:inputText id="warehouseCode" value="#{itemPresenter.item.warehouseCode}"/>
                     </bnu:column>
-                    <bnu:column colMd="4">
+                    <bnu:column colMd="4" colSm="5">
                         <h:outputLabel for="unitMeasure" value="#{msg.base_unitMeasure}"/>
                         <bnu:message for="unitMeasure"/>
                         <h:selectOneMenu id="unitMeasure"
@@ -47,10 +48,23 @@
                     </bnu:column>
                 </bnu:row>
                 <bnu:row>
-                    <bnu:column>
+                    <bnu:column colMd="9">
                         <h:outputLabel for="name" value="#{msg.item_item_name}"/>
                         <bnu:message for="name"/>
                         <bnu:inputText id="name" value="#{itemPresenter.item.name}"/>
+                    </bnu:column>
+                    <bnu:column colMd="3">
+                        <h:outputLabel for="standardCost" value="#{msg.item_item_standardCost}"/>
+                        <bnu:message for="standardCost"/>
+                        <bnu:inputText id="standardCost"
+                                       value="#{itemPresenter.item.standardCost}"
+                                       pt:type="number"
+                                       pt:step="#{Math.pow(10, -itemPresenter.item.scalePrice)}"
+                                       converter="javax.faces.BigDecimal">
+                            <f:facet name="prepend">
+                                <h:outputText value="€" />
+                            </f:facet>
+                        </bnu:inputText>
                     </bnu:column>
                 </bnu:row>
                 <bnu:row>

@@ -176,5 +176,9 @@ public class Item extends BaseEntity<Long>{
     public void setStandardCost(BigDecimal standardCost) {
         this.standardCost = standardCost;
     }
+
+    public int getScalePrice() {
+        return scalePrice;
+    }
     
 }
