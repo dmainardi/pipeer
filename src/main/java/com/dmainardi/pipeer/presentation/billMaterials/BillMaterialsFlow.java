@@ -36,6 +36,7 @@ public class BillMaterialsFlow {
         flowBuilder.viewNode("openItemNode", "/secured/billMaterials/itemNode.xhtml");
         flowBuilder.viewNode("openGroupNode", "/secured/billMaterials/groupNode.xhtml");
         flowBuilder.viewNode("openProcessNode", "/secured/billMaterials/processNode.xhtml");
+        flowBuilder.viewNode("openProcess", "/secured/workshop/process.xhtml");
 
         flowBuilder.returnNode("exitFlow").fromOutcome("billsMaterials");
 

@@ -16,9 +16,11 @@
  */
 package com.dmainardi.pipeer.presentation.workshop;
 
+import com.dmainardi.pipeer.business.billMaterials.entity.ProcessNode;
 import com.dmainardi.pipeer.business.workshop.boundary.ProcessService;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
+import com.dmainardi.pipeer.presentation.billMaterials.BillMaterialsPresenter;
 import com.dmainardi.pipeer.presentation.item.ItemPresenter;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class ProcessPresenter implements Serializable {
     ProcessService service;
     @Inject
     ItemPresenter itemPresenter;
+    @Inject
+    BillMaterialsPresenter billMaterialsPresenter;
     
     private Process process;
     private Long id;
@@ -59,6 +63,14 @@ public class ProcessPresenter implements Serializable {
                 returnOutcomeFromMethod = "openItem";
             }
         } catch (ContextNotActiveException e) { //item flow is not active
+        }
+        try {
+            if (billMaterialsPresenter.getNode() != null && billMaterialsPresenter.getNode() instanceof ProcessNode) {
+                process = ((ProcessNode) billMaterialsPresenter.getNode()).getProcess();
+                returnOutcome = "/secured/billMaterials/processNode?faces-redirect=true";
+                returnOutcomeFromMethod = "openProcessNode";
+            }
+        } catch (ContextNotActiveException e) { //billMaterials flow is not active
         }
     }
     
