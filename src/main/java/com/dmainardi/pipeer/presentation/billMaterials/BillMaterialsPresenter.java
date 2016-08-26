@@ -208,7 +208,7 @@ public class BillMaterialsPresenter implements Serializable {
     public void onItemSelect(SelectEvent event) {
         Item element = (Item) event.getObject();
         ((ItemNode) node).setItem(element);
-        node.setPrice(new BigDecimal(element.getPrice().doubleValue()));
+        node.setPrice(new BigDecimal(element.getStandardCost().doubleValue()));
     }
 
     public BillMaterials getBillMaterials() {

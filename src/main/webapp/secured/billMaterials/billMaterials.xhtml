@@ -89,7 +89,74 @@
                         </bnu:row>
                     </p:tab>
                     <p:tab title="#{msg.billMaterials_billMaterials_content}">
-                        
+                        <bnu:row>
+                            <bnu:column colMd="3">
+                                <p:menuButton value="#{msg.billMaterials_node_new}" styleClass="ui-priority-secondary">
+                                    <p:menuitem value="#{msg.billMaterials_groupNode}" action="#{billMaterialsPresenter.addNode('GROUP_NODE')}"/>
+                                    <p:menuitem value="#{msg.billMaterials_processNode}" action="#{billMaterialsPresenter.addNode('PROCESS_NODE')}"/>
+                                    <p:menuitem value="#{msg.billMaterials_itemNode}" action="#{billMaterialsPresenter.addNode('ITEM_NODE')}"/>
+                                </p:menuButton>
+                            </bnu:column>
+                            <bnu:column colMd="3" offsetMd="3" colSm="2" offsetSm="7" colXs="6">
+                                <p:commandButton value="#{msg.delete}"
+                                                 title="#{msg.billMaterials_node_selected_delete}"
+                                                 action="#{billMaterialsPresenter.deleteSelectedNode()}"
+                                                 update="theTree"/>
+                            </bnu:column>
+                            <bnu:column colMd="3" colSm="2" colXs="6">
+                                <p:commandButton value="#{msg.open}"
+                                                 title="#{msg.billMaterials_node_selected_open}"
+                                                 action="#{billMaterialsPresenter.detailSelectedNode()}"
+                                                 update="theTree"
+                                                 styleClass="ui-priority-secondary"/>
+                            </bnu:column>
+                        </bnu:row>
+                        <bnu:row>
+                            <p:treeTable id="theTree"
+                                         value="#{billMaterialsPresenter.root}"
+                                         var="node"
+                                         nodeVar="pfNode"
+                                         selectionMode="single"
+                                         selection="#{billMaterialsPresenter.selectedNode}"
+                                         rowStyleClass="#{pfNode.type}"
+                                         resizableColumns="true">
+                                <f:facet name="header">#{msg.billMaterials_billMaterials_treeNode}</f:facet>
+                                <p:column headerText="#{msg.billMaterials_node_description}"
+                                          priority="0">
+                                    <h:outputText value="#{node.description}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.billMaterials_node_quantity}"
+                                          priority="3"
+                                          styleClass="centeredColumn">
+                                    <h:outputText value="#{node.qty}">
+                                        <f:convertNumber type="number" maxFractionDigits="5" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="#{msg.base_unitMeasure_initials}"
+                                          priority="5"
+                                          styleClass="centeredColumn">
+                                    <h:outputText value="#{node.unitMeasure}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.billMaterials_node_cost}"
+                                          priority="4"
+                                          styleClass="rightedColumn">
+                                    <h:outputText value="#{node.price}">
+                                        <f:convertNumber type="currency"
+                                                         currencySymbol="€ "
+                                                         maxFractionDigits="2" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="#{msg.billMaterials_node_totalCost}"
+                                          priority="0"
+                                          styleClass="rightedColumn">
+                                    <h:outputText value="#{node.total}">
+                                        <f:convertNumber type="currency"
+                                                         currencySymbol="€ "
+                                                         maxFractionDigits="2" />
+                                    </h:outputText>
+                                </p:column>
+                            </p:treeTable>
+                        </bnu:row>
                     </p:tab>
                     <p:tab title="#{msg.billMaterials_billMaterials_notes}">
                         <bnu:row>

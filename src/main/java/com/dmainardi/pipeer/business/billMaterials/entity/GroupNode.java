@@ -34,7 +34,7 @@ public class GroupNode extends Node {
     private String description;
     
     @Override
-    String getUnitMeasure() {
+    public String getUnitMeasure() {
         return "---";
     }
 

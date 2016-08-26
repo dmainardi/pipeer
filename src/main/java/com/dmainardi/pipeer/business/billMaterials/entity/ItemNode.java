@@ -35,7 +35,7 @@ public class ItemNode extends Node {
     private Item item;
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         if (item != null)
             return item.getCode() + " - " + item.getName();
         else
@@ -43,7 +43,7 @@ public class ItemNode extends Node {
     }
 
     @Override
-    String getUnitMeasure() {
+    public String getUnitMeasure() {
         return item.getUnitMeasure().getSymbol();
     }
     

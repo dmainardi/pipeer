@@ -65,7 +65,7 @@ public class Item extends BaseEntity<Long>{
     @NotNull
     @DecimalMin(value = "0")
     @Column(nullable = false, scale = scalePrice)
-    private BigDecimal price;
+    private BigDecimal standardCost;
     
     @NotNull
     @ManyToOne(optional = false)
@@ -169,12 +169,12 @@ public class Item extends BaseEntity<Long>{
         this.process = process;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getStandardCost() {
+        return standardCost;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setStandardCost(BigDecimal standardCost) {
+        this.standardCost = standardCost;
     }
     
 }

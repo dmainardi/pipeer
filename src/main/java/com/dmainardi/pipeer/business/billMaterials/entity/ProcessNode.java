@@ -35,7 +35,7 @@ public class ProcessNode extends Node {
     private Process process;
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         if (process != null)
             return process.getName();
         else
@@ -43,7 +43,7 @@ public class ProcessNode extends Node {
     }
 
     @Override
-    String getUnitMeasure() {
+    public String getUnitMeasure() {
         return "h";
     }
 
