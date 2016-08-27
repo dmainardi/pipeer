@@ -139,12 +139,14 @@ public class BillMaterialsPresenter implements Serializable {
         switch (nodeType) {
             case ITEM_NODE:
                 node = new ItemNode();
+                selectedItem = null;
                 return "openItemNode";
             case GROUP_NODE:
                 node = new GroupNode();
                 return "openGroupNode";
             case PROCESS_NODE:
                 node = new ProcessNode();
+                selectedProcess = null;
                 return "openProcessNode";
             default:
                 return null;
