@@ -58,7 +58,7 @@ public class BillMaterialsService {
         return null;
     }
     
-    private void updateNodeAmounts(Node current) {
+    public void updateNodeAmounts(Node current) {
         double totalAmount = 0.0;
         if (current.getChildren() != null && !current.getChildren().isEmpty()) {
             for (Node child : current.getChildren()) {

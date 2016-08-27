@@ -12,6 +12,7 @@
             <h:form id="billsMaterialsForm">
                 <p:dataTable id="billsMaterialsList" var="bill" value="#{billMaterialsListPresenter.lazyBillMaterials}"
                              selectionMode="multiple" selection="#{billMaterialsListPresenter.selectedBillsMaterials}" rowKey="#{bill.id}"
+                             resizableColumns="true"
                              paginator="true" rows="10"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="10,25,50" lazy="true">
@@ -23,12 +24,12 @@
                             <f:param name="id" value="0" />
                         </h:button>
                     </f:facet>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_number}" filterBy="#{bill.number}" sortBy="#{bill.number}" priority="0">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_number}" filterBy="#{bill.number}" sortBy="#{bill.number}" styleClass="centeredColumn" priority="0">
                         <h:outputText value="#{bill.number}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_revision}" filterBy="#{bill.revision}" sortBy="#{bill.revision}" priority="1">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_revision}" filterBy="#{bill.revision}" sortBy="#{bill.revision}" styleClass="centeredColumn" priority="1">
                         <h:outputText value="#{bill.revision}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
@@ -36,13 +37,18 @@
                     <p:column headerText="#{msg.customerSupplier_customer}" priority="2">
                         <h:outputText value="#{bill.plant.customerSupplier.name}"/>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_creationDate}" filterBy="#{bill.creationDate}" sortBy="#{bill.creationDate}" priority="1">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_creationDate}" filterBy="#{bill.creationDate}" sortBy="#{bill.creationDate}" styleClass="centeredColumn" priority="1">
                         <h:outputText value="#{bill.creationDate}">
                             <f:convertDateTime pattern="dd/MM/YYYY" />
                         </h:outputText>
                     </p:column>
                     <p:column headerText="#{msg.billMaterials_billMaterials_name}" filterBy="#{bill.name}" sortBy="#{bill.name}" priority="2">
                         <h:outputText value="#{bill.name}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.billMaterials_billMaterials_totalCost}" styleClass="rightedColumn" priority="2">
+                        <h:outputText value="#{bill.root.total}">
+                            <f:convertNumber type="currency" currencySymbol="€ "/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="#{msg.actions}" priority="0">
                         <h:button value="#{msg.edit}" styleClass="btn btn-default btn-sm" outcome="billMaterialsF">

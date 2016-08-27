@@ -17,20 +17,27 @@
         <ui:define name="contentTitle">#{msg.billMaterials_billMaterials}</ui:define>
         <ui:define name="contentSubtitle">#{msg.billMaterials_billMaterials_tip}</ui:define>
         <ui:define name="content">
-            <h:form>
+            <h:form id="form">
                 <bnu:row>
-                    <bnu:column colXs="6">
+                    <bnu:column colSm="4" colXs="6">
                         <h:outputLabel for="number" value="#{msg.billMaterials_billMaterials_number}"/>
                         <bnu:message for="number"/>
                         <h:outputText id="number" value="#{billMaterialsPresenter.billMaterials.number}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </bnu:column>
-                    <bnu:column colXs="6">
+                    <bnu:column colSm="4" colXs="6">
                         <h:outputLabel for="revision" value="#{msg.billMaterials_billMaterials_revision}"/>
                         <bnu:message for="revision"/>
                         <h:outputText id="revision" value="#{billMaterialsPresenter.billMaterials.revision}">
                             <f:convertNumber integerOnly="true"/>
+                        </h:outputText>
+                    </bnu:column>
+                    <bnu:column colSm="4">
+                        <h:outputLabel for="totalCost" value="#{msg.billMaterials_billMaterials_totalCost}"/>
+                        <bnu:message for="totalCost"/>
+                        <h:outputText id="totalCost" value="#{billMaterialsPresenter.billMaterials.root.total}">
+                            <f:convertNumber type="currency" currencySymbol="€ "/>
                         </h:outputText>
                     </bnu:column>
                 </bnu:row>
@@ -92,20 +99,27 @@
                     </p:tab>
                     <p:tab title="#{msg.billMaterials_billMaterials_content}">
                         <bnu:row>
-                            <bnu:column colMd="3">
+                            <bnu:column colSm="3" colXs="6">
                                 <p:menuButton value="#{msg.billMaterials_node_new}" styleClass="ui-priority-secondary">
                                     <p:menuitem value="#{msg.billMaterials_groupNode}" action="#{billMaterialsPresenter.addNode('GROUP_NODE')}"/>
                                     <p:menuitem value="#{msg.billMaterials_processNode}" action="#{billMaterialsPresenter.addNode('PROCESS_NODE')}"/>
                                     <p:menuitem value="#{msg.billMaterials_itemNode}" action="#{billMaterialsPresenter.addNode('ITEM_NODE')}"/>
                                 </p:menuButton>
                             </bnu:column>
-                            <bnu:column colMd="3" offsetMd="3" colSm="2" offsetSm="7" colXs="6">
+                            <bnu:column colMd="2" colSm="3" colXs="6">
+                                <p:commandButton value="#{msg.update}"
+                                                 title="#{msg.billMaterials_billMaterials_updateTree}"
+                                                 action="#{billMaterialsPresenter.updateNodeAmounts()}"
+                                                 update="theTree :form:totalCost"
+                                                 styleClass="ui-priority-secondary"/>
+                            </bnu:column>
+                            <bnu:column colMd="2" offsetMd="3" colSm="3" colXs="6">
                                 <p:commandButton value="#{msg.delete}"
                                                  title="#{msg.billMaterials_node_selected_delete}"
                                                  action="#{billMaterialsPresenter.deleteSelectedNode()}"
                                                  update="theTree"/>
                             </bnu:column>
-                            <bnu:column colMd="3" colSm="2" colXs="6">
+                            <bnu:column colMd="2" colSm="3" colXs="6">
                                 <p:commandButton value="#{msg.open}"
                                                  title="#{msg.billMaterials_node_selected_open}"
                                                  action="#{billMaterialsPresenter.detailSelectedNode()}"

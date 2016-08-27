@@ -29,8 +29,6 @@ import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -81,6 +79,10 @@ public class BillMaterialsPresenter implements Serializable {
         }
 
         return "exitFlow";
+    }
+    
+    public void updateNodeAmounts() {
+        service.updateNodeAmounts(billMaterials.getRoot());
     }
 
     public void detailBillMaterials() {
@@ -221,8 +223,6 @@ public class BillMaterialsPresenter implements Serializable {
     }
 
     public void onItemSelect(SelectEvent event) {
-        /*Item element = (Item) event.getObject();
-        ((ItemNode) node).setItem(element);*/
         node.setPrice(new BigDecimal(((ItemNode)node).getItem().getStandardCost().doubleValue()));
     }
     
