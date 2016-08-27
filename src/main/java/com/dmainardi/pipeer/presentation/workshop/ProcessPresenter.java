@@ -23,6 +23,8 @@ import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import com.dmainardi.pipeer.presentation.billMaterials.BillMaterialsPresenter;
 import com.dmainardi.pipeer.presentation.item.ItemPresenter;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -99,6 +101,14 @@ public class ProcessPresenter implements Serializable {
         } catch (EJBException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
             return null;
+        }
+        
+        try {
+            if (billMaterialsPresenter.getNode() != null && billMaterialsPresenter.getNode() instanceof ProcessNode) {
+                billMaterialsPresenter.setSelectedProcess(process);
+                billMaterialsPresenter.getNode().setPrice(new BigDecimal(process.getStandardCost().doubleValue()));
+            }
+        } catch (ContextNotActiveException e) { //billMaterials flow is not active
         }
         
         return returnOutcomeFromMethod;
