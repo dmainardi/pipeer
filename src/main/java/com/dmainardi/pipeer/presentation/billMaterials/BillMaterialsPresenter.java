@@ -71,16 +71,6 @@ public class BillMaterialsPresenter implements Serializable {
     private Item selectedItem;
     
     private Integer tabActiveIndex;
-    
-    @PostConstruct
-    public void init() {
-        System.out.println("BillMaterials presenter created");
-    }
-    
-    @PreDestroy
-    public void end() {
-        System.out.println("BillMaterials presenter destroyed");
-    }
 
     public String saveBillMaterials() {
         try {
@@ -231,9 +221,9 @@ public class BillMaterialsPresenter implements Serializable {
     }
 
     public void onItemSelect(SelectEvent event) {
-        Item element = (Item) event.getObject();
-        ((ItemNode) node).setItem(element);
-        node.setPrice(new BigDecimal(element.getStandardCost().doubleValue()));
+        /*Item element = (Item) event.getObject();
+        ((ItemNode) node).setItem(element);*/
+        node.setPrice(new BigDecimal(((ItemNode)node).getItem().getStandardCost().doubleValue()));
     }
     
     public String detailItem(Item itemBeingOpened) {

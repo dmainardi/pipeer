@@ -15,7 +15,7 @@
                              var="item"
                              value="#{itemListPresenter.lazyItem}"
                              selectionMode="single"
-                             selection="#{billMaterialsPresenter.selectedItem}"
+                             selection="#{billMaterialsPresenter.node.item}"
                              rowKey="#{item.id}"
                              paginator="true"
                              rows="10"
@@ -29,7 +29,7 @@
                     </f:facet>
                     <p:ajax event="rowSelect"
                             listener="#{billMaterialsPresenter.onItemSelect}"
-                            update=":form:price" />
+                            update=":form:price :form:description" />
                     <p:column headerText="#{msg.item_item_code}" filterBy="#{item.code}" sortBy="#{item.code}" priority="0">
                         <h:outputText value="#{item.code}"/>
                     </p:column>
@@ -43,7 +43,14 @@
                         <h:outputText value="#{item.unitMeasure.symbol}"/>
                     </p:column>
                 </p:dataTable>
-
+                
+                <bnu:row>
+                    <bnu:column>
+                        <h:outputLabel for="description" value="#{msg.billMaterials_itemNode_selected}"/>
+                        <bnu:message for="description"/>
+                        <h:outputText id="description" value="#{billMaterialsPresenter.node.description}"/>
+                    </bnu:column>
+                </bnu:row>
                 <ui:include src="commonNodeFieldsTemplate.xhtml"/>
             </h:form>
         </ui:define>

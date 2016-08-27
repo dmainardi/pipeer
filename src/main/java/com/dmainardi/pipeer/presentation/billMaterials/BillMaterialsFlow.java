@@ -36,8 +36,7 @@ public class BillMaterialsFlow {
         flowBuilder.viewNode("openItemNode", "/secured/billMaterials/itemNode.xhtml");
         flowBuilder.flowCallNode("openItem").flowReference("", "itemF").
                 outboundParameter("item", "#{billMaterialsPresenter.node.item}").
-                outboundParameter("returnOutcome", "returnToItemNode").
-                outboundParameter("returnOutcomeFromMethod", "returnToItemNode");
+                outboundParameter("returnOutcome", "returnToItemNode");
         flowBuilder.viewNode("openGroupNode", "/secured/billMaterials/groupNode.xhtml");
         flowBuilder.viewNode("openProcessNode", "/secured/billMaterials/processNode.xhtml");
         flowBuilder.viewNode("openProcess", "/secured/workshop/process.xhtml");

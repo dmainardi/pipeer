@@ -41,7 +41,6 @@ public class ItemFlow {
         
         flowBuilder.inboundParameter("item", "#{itemPresenter.item}");
         flowBuilder.inboundParameter("returnOutcome", "#{itemPresenter.returnOutcome}");
-        flowBuilder.inboundParameter("returnOutcomeFromMethod", "#{itemPresenter.returnOutcomeFromMethod}");
 
         return flowBuilder.getFlow();
     }
