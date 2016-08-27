@@ -24,7 +24,6 @@ import com.dmainardi.pipeer.presentation.billMaterials.BillMaterialsPresenter;
 import com.dmainardi.pipeer.presentation.item.ItemPresenter;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

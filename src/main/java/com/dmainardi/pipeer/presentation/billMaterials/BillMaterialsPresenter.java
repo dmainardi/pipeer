@@ -29,6 +29,8 @@ import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -69,6 +71,16 @@ public class BillMaterialsPresenter implements Serializable {
     private Item selectedItem;
     
     private Integer tabActiveIndex;
+    
+    @PostConstruct
+    public void init() {
+        System.out.println("BillMaterials presenter created");
+    }
+    
+    @PreDestroy
+    public void end() {
+        System.out.println("BillMaterials presenter destroyed");
+    }
 
     public String saveBillMaterials() {
         try {
@@ -222,6 +234,14 @@ public class BillMaterialsPresenter implements Serializable {
         Item element = (Item) event.getObject();
         ((ItemNode) node).setItem(element);
         node.setPrice(new BigDecimal(element.getStandardCost().doubleValue()));
+    }
+    
+    public String detailItem(Item itemBeingOpened) {
+        if (itemBeingOpened == null)
+            ((ItemNode) node).setItem(new Item());
+        else
+            ((ItemNode) node).setItem(itemBeingOpened);
+        return "openItem";
     }
 
     public BillMaterials getBillMaterials() {

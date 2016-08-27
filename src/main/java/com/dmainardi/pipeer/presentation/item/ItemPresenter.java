@@ -16,12 +16,19 @@
  */
 package com.dmainardi.pipeer.presentation.item;
 
+import com.dmainardi.pipeer.business.billMaterials.entity.ItemNode;
+import com.dmainardi.pipeer.business.billMaterials.entity.ProcessNode;
 import com.dmainardi.pipeer.business.item.boundary.ItemService;
 import com.dmainardi.pipeer.business.item.entity.Item;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
+import com.dmainardi.pipeer.presentation.billMaterials.BillMaterialsPresenter;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
+import javax.enterprise.context.ContextNotActiveException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.flow.FlowScoped;
@@ -38,9 +45,32 @@ public class ItemPresenter implements Serializable {
 
     @Inject
     ItemService service;
+    @Inject
+    BillMaterialsPresenter billMaterialsPresenter;
 
     private Item item;
     private Long id;
+    
+    private String returnOutcome = "exitFlow";
+    private String returnOutcomeFromMethod = returnOutcome;
+    
+    @PostConstruct
+    public void init() {
+        /*try {
+            if (billMaterialsPresenter.getNode() != null && billMaterialsPresenter.getNode() instanceof ItemNode) {
+                item = ((ItemNode) billMaterialsPresenter.getNode()).getItem();
+                returnOutcome = "returnToItemNode";
+                returnOutcomeFromMethod = "returnToItemNode";
+            }
+        } catch (ContextNotActiveException e) { //billMaterials flow is not active
+        }*/
+        System.out.println("Item presenter created");
+    }
+    
+    @PreDestroy
+    public void end() {
+        System.out.println("Item presenter destroyed");
+    }
     
     public String detailProcess(Process processBeingOpened) {
         if (processBeingOpened == null)
@@ -57,8 +87,16 @@ public class ItemPresenter implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
             return null;
         }
+        
+        /*try {
+            if (billMaterialsPresenter.getNode() != null && billMaterialsPresenter.getNode() instanceof ProcessNode) {
+                billMaterialsPresenter.setSelectedItem(item);
+                billMaterialsPresenter.getNode().setPrice(new BigDecimal(item.getStandardCost().doubleValue()));
+            }
+        } catch (ContextNotActiveException e) { //billMaterials flow is not active
+        }*/
 
-        return "exitFlow";
+        return returnOutcomeFromMethod;
     }
 
     public void detailItem() {
@@ -87,4 +125,21 @@ public class ItemPresenter implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getReturnOutcome() {
+        return returnOutcome;
+    }
+
+    public void setReturnOutcome(String returnOutcome) {
+        this.returnOutcome = returnOutcome;
+    }
+
+    public String getReturnOutcomeFromMethod() {
+        return returnOutcomeFromMethod;
+    }
+
+    public void setReturnOutcomeFromMethod(String returnOutcomeFromMethod) {
+        this.returnOutcomeFromMethod = returnOutcomeFromMethod;
+    }
+    
 }

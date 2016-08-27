@@ -34,8 +34,14 @@ public class ItemFlow {
 
         flowBuilder.viewNode("openItem", "/secured/item/item.xhtml").markAsStartNode();
         flowBuilder.viewNode("openProcess", "/secured/workshop/process.xhtml");
-
+        
+        flowBuilder.returnNode("returnToItemNode").fromOutcome("openItemNode");
+        
         flowBuilder.returnNode("exitFlow").fromOutcome("items");
+        
+        flowBuilder.inboundParameter("item", "#{itemPresenter.item}");
+        flowBuilder.inboundParameter("returnOutcome", "#{itemPresenter.returnOutcome}");
+        flowBuilder.inboundParameter("returnOutcomeFromMethod", "#{itemPresenter.returnOutcomeFromMethod}");
 
         return flowBuilder.getFlow();
     }
