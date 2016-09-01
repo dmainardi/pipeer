@@ -22,7 +22,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -40,7 +40,7 @@ public class PaymentMethod extends BaseEntity<Long>{
     private String name;
     
     @NotNull
-    @Min(value = 0)
+    @DecimalMin(value = "0")
     @Column(nullable = false)
     private Integer days;
     

@@ -3,7 +3,10 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:bnu="http://bootsfaces.net/ui"
-                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:oou="http://omnifaces.org/ui">
+    <oou:importConstants type="com.dmainardi.pipeer.business.billMaterials.entity.Node"/>
+    <oou:importFunctions type="java.lang.Math" />
     <bnu:row>
         <bnu:column colXs="6">
             <h:outputLabel for="qty" value="#{msg.billMaterials_node_quantity}"/>
@@ -11,7 +14,7 @@
             <bnu:inputText id="qty"
                            value="#{billMaterialsPresenter.node.qty}"
                            pt:type="number"
-                           pt:step="#{Math.pow(10, -billMaterialsPresenter.node.scaleQty)}"
+                           pt:step="#{Math:pow(10, -Node.SCALE_QTY)}"
                            converter="javax.faces.BigDecimal">
             </bnu:inputText>
         </bnu:column>
@@ -21,7 +24,7 @@
             <bnu:inputText id="price"
                            value="#{billMaterialsPresenter.node.price}"
                            pt:type="number"
-                           pt:step="#{Math.pow(10, -billMaterialsPresenter.node.scalePrice)}"
+                           pt:step="#{Math:pow(10, -Node.SCALE_COST)}"
                            converter="javax.faces.BigDecimal">
                 <f:facet name="prepend">
                     <h:outputText value="€" />

@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:bnu="http://bootsfaces.net/ui"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:oou="http://omnifaces.org/ui">
     <f:metadata>
         <f:viewParam name="id"
                      value="#{processPresenter.id}"
@@ -16,6 +17,8 @@
         <ui:define name="contentTitle">#{msg.workshop_process}</ui:define>
         <ui:define name="contentSubtitle">#{msg.workshop_process_tip}</ui:define>
         <ui:define name="content">
+            <oou:importConstants type="com.dmainardi.pipeer.business.workshop.entity.Process"/>
+            <oou:importFunctions type="java.lang.Math" />
             <h:form>
                 <bnu:panelGrid colSpans="3,5,4">
                     <h:outputLabel for="name" value="#{msg.workshop_process_name}"/>
@@ -26,7 +29,7 @@
                     <bnu:inputText id="standardCost"
                                    value="#{processPresenter.process.standardCost}"
                                    pt:type="number"
-                                   pt:step="#{processPresenter.process.standardCostStep}"
+                                   pt:step="#{Math:pow(10, -Process.SCALE_COST)}"
                                    converter="javax.faces.BigDecimal">
                         <f:facet name="prepend">
                             <h:outputText value="€" />

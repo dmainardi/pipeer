@@ -47,13 +47,13 @@ public class Item extends BaseEntity<Long>{
     private Long id;
     
     @Transient
-    private final int maxCodeTextSize = 50;
+    public static final int MAX_CODE_TEXT_SIZE = 50;
     @Transient
-    private final int scalePrice = 2;
+    public static final int SCALE_COST = 2;
     
     @NotNull
-    @Size(max = maxCodeTextSize)
-    @Column(nullable = false, unique = true, length = maxCodeTextSize)
+    @Size(max = MAX_CODE_TEXT_SIZE)
+    @Column(nullable = false, unique = true, length = MAX_CODE_TEXT_SIZE)
     private String code;
     
     private String warehouseCode;
@@ -64,7 +64,7 @@ public class Item extends BaseEntity<Long>{
     
     @NotNull
     @DecimalMin(value = "0")
-    @Column(nullable = false, scale = scalePrice)
+    @Column(nullable = false, scale = SCALE_COST)
     private BigDecimal standardCost;
     
     @NotNull
@@ -136,10 +136,6 @@ public class Item extends BaseEntity<Long>{
         this.version = version;
     }
 
-    public int getMaxCodeTextSize() {
-        return maxCodeTextSize;
-    }
-
     public String getTagsStr() {
         StringBuilder b = new StringBuilder();
         for (Tag tag : tags) {
@@ -175,10 +171,6 @@ public class Item extends BaseEntity<Long>{
 
     public void setStandardCost(BigDecimal standardCost) {
         this.standardCost = standardCost;
-    }
-
-    public int getScalePrice() {
-        return scalePrice;
     }
     
 }

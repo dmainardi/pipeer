@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:bnu="http://bootsfaces.net/ui">
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:oou="http://omnifaces.org/ui">
     <f:metadata>
         <f:viewParam name="id"
                      value="#{unitMeasurePresenter.id}"
@@ -15,6 +16,7 @@
         <ui:define name="contentTitle">#{msg.base_unitMeasure}</ui:define>
         <ui:define name="contentSubtitle">#{msg.base_unitMeasure_tip}</ui:define>
         <ui:define name="content">
+            <oou:importConstants type="com.dmainardi.pipeer.business.base.entity.UnitMeasure"/>
             <h:form>
                 <bnu:panelGrid colSpans="3,5,4">
                     <h:outputLabel for="name" value="#{msg.base_unitMeasure_name}"/>
@@ -24,7 +26,7 @@
                     <h:outputLabel for="symbol" value="#{msg.base_unitMeasure_symbol}"/>
                     <bnu:inputText id="symbol"
                                    value="#{unitMeasurePresenter.unitMeasure.symbol}"
-                                   maxlength="#{unitMeasurePresenter.unitMeasure.maxSymbolTextSize}"/>
+                                   maxlength="#{UnitMeasure.MAX_SYMBOL_TEXT_SIZE}"/>
                     <bnu:message/>
                 </bnu:panelGrid>
                 <bnu:row>

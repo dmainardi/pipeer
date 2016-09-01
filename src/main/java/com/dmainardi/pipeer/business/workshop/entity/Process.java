@@ -25,7 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -39,15 +39,15 @@ public class Process extends BaseEntity<Long>{
     private Long id;
     
     @Transient
-    private final double standardCostStep = 0.01;
+    public static final int SCALE_COST = 2;
     
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
     
-    @Min(0)
     @NotNull
-    @Column(nullable = false)
+    @DecimalMin(value = "0")
+    @Column(nullable = false, scale = SCALE_COST)
     private BigDecimal standardCost;
     
     @Version
@@ -89,10 +89,6 @@ public class Process extends BaseEntity<Long>{
     @Override
     public Long getId() {
         return id;
-    }
-
-    public double getStandardCostStep() {
-        return standardCostStep;
     }
     
 }

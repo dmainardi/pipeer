@@ -50,9 +50,9 @@ public abstract class Node extends BaseEntity<Long>{
     private Long id;
     
     @Transient
-    private final int scaleQty = 5;
+    public static final int SCALE_QTY = 5;
     @Transient
-    private final int scalePrice = 2;
+    public static final int SCALE_COST = 2;
     
     @ManyToOne
     private Node father;
@@ -65,12 +65,12 @@ public abstract class Node extends BaseEntity<Long>{
     
     @NotNull
     @DecimalMin(value = "0")
-    @Column(nullable = false, scale = scaleQty)
+    @Column(nullable = false, scale = SCALE_QTY)
     private BigDecimal qty;
     
     @NotNull
     @DecimalMin(value = "0")
-    @Column(nullable = false, scale = scalePrice)
+    @Column(nullable = false, scale = SCALE_COST)
     private BigDecimal price;
     
     private String notes;
@@ -151,14 +151,6 @@ public abstract class Node extends BaseEntity<Long>{
     @Override
     public Long getId() {
         return id;
-    }
-
-    public int getScaleQty() {
-        return scaleQty;
-    }
-
-    public int getScalePrice() {
-        return scalePrice;
     }
     
 }

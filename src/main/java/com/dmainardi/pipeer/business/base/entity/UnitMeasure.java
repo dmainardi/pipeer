@@ -37,11 +37,11 @@ public class UnitMeasure extends BaseEntity<Long>{
     private Long id;
     
     @Transient
-    private final int maxSymbolTextSize = 10;
+    public static final int MAX_SYMBOL_TEXT_SIZE = 10;
     
-    @Column(nullable = false, unique = true, length = maxSymbolTextSize)
+    @Column(nullable = false, unique = true, length = MAX_SYMBOL_TEXT_SIZE)
     @NotNull
-    @Size(max = maxSymbolTextSize)
+    @Size(max = MAX_SYMBOL_TEXT_SIZE)
     private String symbol;
     
     @Column(nullable = false)
@@ -81,9 +81,5 @@ public class UnitMeasure extends BaseEntity<Long>{
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    public int getMaxSymbolTextSize() {
-        return maxSymbolTextSize;
     }
 }

@@ -18,6 +18,8 @@
         <ui:define name="contentTitle">#{msg.item_item}</ui:define>
         <ui:define name="contentSubtitle">#{msg.item_item_tip}</ui:define>
         <ui:define name="content">
+            <o:importConstants type="com.dmainardi.pipeer.business.item.entity.Item"/>
+            <o:importFunctions type="java.lang.Math" />
             <o:form>
                 <bnu:row>
                     <bnu:column colMd="4">
@@ -25,7 +27,7 @@
                         <bnu:message for="code"/>
                         <bnu:inputText id="code"
                                        value="#{itemPresenter.item.code}"
-                                       maxlength="#{itemPresenter.item.maxCodeTextSize}"/>
+                                       maxlength="#{Item.MAX_CODE_TEXT_SIZE}"/>
                     </bnu:column>
                     <bnu:column colMd="4" colSm="7">
                         <h:outputLabel for="warehouseCode" value="#{msg.item_item_warehouseCode}"/>
@@ -59,7 +61,7 @@
                         <bnu:inputText id="standardCost"
                                        value="#{itemPresenter.item.standardCost}"
                                        pt:type="number"
-                                       pt:step="#{Math.pow(10, -itemPresenter.item.scalePrice)}"
+                                       pt:step="#{Math:pow(10, -Item.SCALE_COST)}"
                                        converter="javax.faces.BigDecimal">
                             <f:facet name="prepend">
                                 <h:outputText value="€" />
