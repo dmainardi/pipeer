@@ -5,12 +5,23 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:bnu="http://bootsfaces.net/ui">
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:oou="http://omnifaces.org/ui">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.billMaterials_itemNode}</ui:define>
         <ui:define name="contentSubtitle">#{msg.billMaterials_itemNode_tip}</ui:define>
         <ui:define name="content">
             <h:form id="form">
+                <p:pickList id="tagsPickList" responsive="true"
+                            value="#{itemListPresenter.tagsForPickList}" var="tag"
+                            itemLabel="#{tag.name}" itemValue="#{tag}"
+                            showSourceFilter="true" filterMatchMode="contains">
+                    <oou:converter converterId="omnifaces.ListConverter"
+                                   list="#{tagPresenter.listTags()}"/>
+                    <f:facet name="sourceCaption">#{msg.item_tags}</f:facet>
+                    <f:facet name="targetCaption">#{msg.item_tags_selected}</f:facet>
+                    <p:ajax event="transfer" listener="#{itemListPresenter.updateTagsForSearching()}" update="itemsList" />
+                </p:pickList>
                 <p:dataTable id="itemsList"
                              var="item"
                              value="#{itemListPresenter.lazyItem}"

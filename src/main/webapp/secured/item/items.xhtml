@@ -4,12 +4,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:oou="http://omnifaces.org/ui">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.item_items}</ui:define>
         <ui:define name="contentSubtitle">#{msg.item_items_tip}</ui:define>
         <ui:define name="content">
             <h:form id="itemsForm">
+                <p:pickList id="tagsPickList" responsive="true"
+                            value="#{itemListPresenter.tagsForPickList}" var="tag"
+                            itemLabel="#{tag.name}" itemValue="#{tag}"
+                            showSourceFilter="true" filterMatchMode="contains">
+                    <oou:converter converterId="omnifaces.ListConverter"
+                                   list="#{tagPresenter.listTags()}"/>
+                    <f:facet name="sourceCaption">#{msg.item_tags}</f:facet>
+                    <f:facet name="targetCaption">#{msg.item_tags_selected}</f:facet>
+                    <p:ajax event="transfer" listener="#{itemListPresenter.updateTagsForSearching()}" update="itemsList" />
+                </p:pickList>
                 <p:dataTable id="itemsList" var="item" value="#{itemListPresenter.lazyItem}"
                              selectionMode="multiple" selection="#{itemListPresenter.selectedItems}" rowKey="#{item.id}"
                              paginator="true" rows="10"

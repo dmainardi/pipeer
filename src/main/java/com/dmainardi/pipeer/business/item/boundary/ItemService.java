@@ -17,6 +17,7 @@
 package com.dmainardi.pipeer.business.item.boundary;
 
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.business.item.entity.Item_;
 import com.dmainardi.pipeer.business.item.entity.Tag;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -73,13 +74,19 @@ public class ItemService {
         em.remove(readItem(id));
     }
     
-    public List<Item> listItems(int first, int pageSize, Map<String, Object> filters, String sortField, Boolean isAscending) {
+    public List<Item> listItems(List<Tag> tags, int first, int pageSize, Map<String, Object> filters, String sortField, Boolean isAscending) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Item> query = cb.createQuery(Item.class);
         Root<Item> root = query.from(Item.class);
         CriteriaQuery<Item> select = query.select(root).distinct(true);
 
         List<Predicate> conditions = new ArrayList<>();
+        
+        if (tags != null && !tags.isEmpty()) {
+            //using "conditions.add(root.get(Item_.tags).in(tags))" would have selected items containing almost one of the tag
+            for (Tag tag : tags)
+                conditions.add(root.get(Item_.tags).in(tag));
+        }
         
         if (filters != null) {
             for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -106,13 +113,19 @@ public class ItemService {
         return typedQuery.getResultList();
     }
     
-    public Long getItemsCount(Map<String, Object> filters) {
+    public Long getItemsCount(List<Tag> tags, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<Item> root = query.from(Item.class);
         CriteriaQuery<Long> select = query.select(cb.count(root));
 
         List<Predicate> conditions = new ArrayList<>();
+        
+        if (tags != null && !tags.isEmpty()) {
+            //using "conditions.add(root.get(Item_.tags).in(tags))" would have selected items containing almost one of the tag
+            for (Tag tag : tags)
+                conditions.add(root.get(Item_.tags).in(tag));
+        }
         
         if (filters != null) {
             for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {

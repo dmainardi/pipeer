@@ -18,6 +18,8 @@ package com.dmainardi.pipeer.presentation.item;
 
 import com.dmainardi.pipeer.business.item.boundary.ItemService;
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.business.item.entity.Tag;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.model.LazyDataModel;
@@ -29,9 +31,11 @@ import org.primefaces.model.SortOrder;
  */
 public class ItemLazyDataModel extends LazyDataModel<Item> {
     private final ItemService service;
+    private final List<Tag> tags;
 
     public ItemLazyDataModel(ItemService service) {
         this.service = service;
+        this.tags = new ArrayList<>();
     }
     
     @Override
@@ -61,9 +65,14 @@ public class ItemLazyDataModel extends LazyDataModel<Item> {
                 break;
             default:
         }
-        List<Item> result = service.listItems(first, pageSize, filters, sortField, isAscending);
-        this.setRowCount(service.getItemsCount(filters).intValue());
+        List<Item> result = service.listItems(tags, first, pageSize, filters, sortField, isAscending);
+        this.setRowCount(service.getItemsCount(tags, filters).intValue());
         
         return result;
+    }
+    
+    public void updateTags(List<Tag> tags) {
+        this.tags.clear();
+        this.tags.addAll(tags);
     }
 }

@@ -17,9 +17,12 @@
 package com.dmainardi.pipeer.presentation.item;
 
 import com.dmainardi.pipeer.business.item.boundary.ItemService;
+import com.dmainardi.pipeer.business.item.boundary.TagService;
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.business.item.entity.Tag;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -28,6 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -38,9 +42,13 @@ import javax.inject.Named;
 public class ItemListPresenter implements Serializable{
     @Inject
     ItemService itemService;
+    @Inject
+    TagService tagService;
     
     private ItemLazyDataModel lazyItem;
     private List<Item> selectedItems;
+    
+    private DualListModel<Tag> tagsForPickList = new DualListModel<>();
     
     @PostConstruct
     public void init() {
@@ -71,5 +79,20 @@ public class ItemListPresenter implements Serializable{
 
     public void setSelectedItems(List<Item> selectedItems) {
         this.selectedItems = selectedItems;
+    }
+
+    public DualListModel<Tag> getTagsForPickList() {
+        if (tagsForPickList.getSource().isEmpty() && tagsForPickList.getTarget().isEmpty()) {
+            tagsForPickList.setSource(tagService.listTags());
+        }
+        return tagsForPickList;
+    }
+
+    public void setTagsForPickList(DualListModel<Tag> tagsForPickList) {
+        this.tagsForPickList = tagsForPickList;
+    }
+    
+    public void updateTagsForSearching() {
+        lazyItem.updateTags(tagsForPickList.getTarget());
     }
 }
