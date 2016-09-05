@@ -25,3 +25,10 @@ How to build
 * Open the terminal and move into Glassfish/Payara bin folder and execute [create.sh] (src/main/resources/glassfish/create.sh), a script for initializing the security realm.
 * Build and run the project.
 * Tada!
+
+How to use
+---
+* Admin: username - adminDemo, password - demo
+* User: username - guest, password - guest
+* New users must be "enabled" (put into 'user' group) by admin
+
