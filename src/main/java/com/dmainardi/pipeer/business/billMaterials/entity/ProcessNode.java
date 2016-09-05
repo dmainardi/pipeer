@@ -54,5 +54,15 @@ public class ProcessNode extends Node {
     public void setProcess(Process process) {
         this.process = process;
     }
+
+    @Override
+    Node duplicate() {
+        ProcessNode result = new ProcessNode();
+        
+        duplicateCommonFields(result);
+        result.setProcess(process);
+        
+        return result;
+    }
     
 }

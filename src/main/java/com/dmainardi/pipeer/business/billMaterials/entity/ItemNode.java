@@ -54,5 +54,15 @@ public class ItemNode extends Node {
     public void setItem(Item item) {
         this.item = item;
     }
+
+    @Override
+    Node duplicate() {
+        ItemNode result = new ItemNode();
+        
+        super.duplicateCommonFields(result);
+        result.setItem(item);
+        
+        return result;
+    }
     
 }

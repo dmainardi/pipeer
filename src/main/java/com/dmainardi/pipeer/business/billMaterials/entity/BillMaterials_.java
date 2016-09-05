@@ -27,5 +27,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(BillMaterials.class)
 public class BillMaterials_ {
     public static volatile SingularAttribute<BillMaterials, Integer> number;
+    public static volatile SingularAttribute<BillMaterials, Integer> revision;
     public static volatile SingularAttribute<BillMaterials, Date> creationDate;
 }

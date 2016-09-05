@@ -88,6 +88,20 @@ public abstract class Node extends BaseEntity<Long>{
     
     abstract String getUnitMeasure();
     
+    abstract Node duplicate();
+    
+    protected void duplicateCommonFields(Node result) {
+        for (Node child : children) {
+            Node duplicatedChild = child.duplicate();
+            duplicatedChild.setFather(result);
+            result.getChildren().add(duplicatedChild);
+        }
+        
+        result.setNotes(notes);
+        result.setPrice(new BigDecimal(price.doubleValue()));
+        result.setQty(new BigDecimal(qty.doubleValue()));
+    }
+    
     public BigDecimal getTotal() {
         return qty.multiply(price);
     }

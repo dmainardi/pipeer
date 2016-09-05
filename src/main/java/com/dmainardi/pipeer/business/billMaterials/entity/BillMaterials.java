@@ -73,6 +73,23 @@ public class BillMaterials extends BaseEntity<Long>{
     
     @Version
     private int version;
+    
+    public BillMaterials duplicate(boolean isRevision) {
+        BillMaterials result = new BillMaterials();
+        
+        result.setCreationDate(new Date());
+        result.setName(name);
+        result.setNotes(notes);
+        result.setPlant(plant);
+        result.setRoot(root.duplicate());
+        result.getRoot().setBillMaterials(result);
+        if (isRevision) {
+            result.setNumber(number);
+            result.setRevision(-1);
+        }
+        
+        return result;
+    }
 
     public BillMaterials() {
         number = 0;

@@ -47,9 +47,11 @@ public class BillMaterialsService {
     EntityManager em;
 
     public BillMaterials saveBillMaterials(BillMaterials billMaterials) {
+        fixRevision(billMaterials);
         updateNodeAmounts(billMaterials.getRoot());
         if (billMaterials.getId() == null) {
-            billMaterials.setNumber(getNextNumber());
+            if (billMaterials.getRevision().equals(0))  //useful for not updating bill of materials' number when it's only a revision
+                billMaterials.setNumber(getNextNumber());
             em.persist(billMaterials);
         }
         else
@@ -67,7 +69,44 @@ public class BillMaterialsService {
             }
             current.setPrice(new BigDecimal(totalAmount));
         }
-}
+    }
+    
+    public void fixRevision(BillMaterials billMaterials) {
+        if (billMaterials.getRevision() < 0)
+            billMaterials.setRevision(getNextRevision(billMaterials));
+    }
+    
+    private Integer getNextRevision(BillMaterials billMaterials) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Integer> query = cb.createQuery(Integer.class);
+        Root<BillMaterials> myBill = query.from(BillMaterials.class);
+        query.select(cb.greatest(myBill.get(BillMaterials_.revision)));
+        
+        List<Predicate> conditions = new ArrayList<>();
+        
+        GregorianCalendar dateStart = new GregorianCalendar(new GregorianCalendar().get(Calendar.YEAR), 0, 01);
+        GregorianCalendar dateEnd = new GregorianCalendar(new GregorianCalendar().get(Calendar.YEAR), 11, 31);
+        
+        conditions.add(cb.between(myBill.get(BillMaterials_.creationDate), dateStart.getTime(), dateEnd.getTime()));
+        conditions.add(cb.equal(myBill.get(BillMaterials_.number), billMaterials.getNumber()));
+
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
+        
+        Integer result;
+        try {
+            result = em.createQuery(query).getSingleResult();
+            if (result != null)
+                result++;
+            else
+                result = 0;
+        } catch (NoResultException e) {
+            result = 0;
+        }
+        
+	return result;
+    }
     
     private Integer getNextNumber() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -106,6 +145,12 @@ public class BillMaterialsService {
 
     public void deleteBillMaterials(Long id) {
         em.remove(readBillMaterials(id));
+    }
+    
+    public void duplicateBillMaterials(Long id, boolean isRevision) {
+        BillMaterials billMaterials = readBillMaterials(id);
+        if (billMaterials != null)
+            saveBillMaterials(billMaterials.duplicate(isRevision));
     }
     
     public List<BillMaterials> listBillsMaterials(int first, int pageSize, Map<String, Object> filters, String sortField, Boolean isAscending) {

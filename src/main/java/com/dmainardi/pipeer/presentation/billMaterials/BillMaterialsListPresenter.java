@@ -60,6 +60,34 @@ public class BillMaterialsListPresenter implements Serializable{
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before deleting"));
     }
+    
+    public void createRevision() {
+        if (selectedBillsMaterials != null && !selectedBillsMaterials.isEmpty()) {
+            for (BillMaterials billMaterialsTemp : selectedBillsMaterials) {
+                try {
+                    billMaterialsService.duplicateBillMaterials(billMaterialsTemp.getId(), true);
+                } catch (EJBException e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+                }
+            }
+        }
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before creating a new revision"));
+    }
+    
+    public void duplicate() {
+        if (selectedBillsMaterials != null && !selectedBillsMaterials.isEmpty()) {
+            for (BillMaterials billMaterialsTemp : selectedBillsMaterials) {
+                try {
+                    billMaterialsService.duplicateBillMaterials(billMaterialsTemp.getId(), false);
+                } catch (EJBException e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ExceptionUtility.unwrap(e.getCausedByException()).getLocalizedMessage()));
+                }
+            }
+        }
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a row before duplicating"));
+    }
 
     public BillMaterialsLazyDataModel getLazyBillMaterials() {
         return lazyBillMaterials;

@@ -16,6 +16,7 @@
  */
 package com.dmainardi.pipeer.business.billMaterials.entity;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -45,6 +46,16 @@ public class GroupNode extends Node {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    Node duplicate() {
+        GroupNode result = new GroupNode();
+        
+        super.duplicateCommonFields(result);
+        result.setDescription(description);
+        
+        return result;
     }
     
 }
