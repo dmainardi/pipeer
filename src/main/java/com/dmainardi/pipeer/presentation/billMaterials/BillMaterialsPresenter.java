@@ -24,11 +24,14 @@ import com.dmainardi.pipeer.business.billMaterials.entity.Node;
 import com.dmainardi.pipeer.business.billMaterials.entity.ProcessNode;
 import com.dmainardi.pipeer.business.customerSupplier.boundary.CustomerSupplierService;
 import com.dmainardi.pipeer.business.customerSupplier.entity.CustomerSupplier;
+import com.dmainardi.pipeer.business.item.boundary.ItemService;
 import com.dmainardi.pipeer.business.item.entity.Item;
+import com.dmainardi.pipeer.business.workshop.boundary.ProcessService;
 import com.dmainardi.pipeer.business.workshop.entity.Process;
 import com.dmainardi.pipeer.presentation.ExceptionUtility;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -51,6 +54,10 @@ public class BillMaterialsPresenter implements Serializable {
     BillMaterialsService service;
     @Inject
     CustomerSupplierService customerService;
+    @Inject
+    ProcessService processService;
+    @Inject
+    ItemService itemService;
     
     public enum NodeType {
         GROUP_NODE,
@@ -69,6 +76,7 @@ public class BillMaterialsPresenter implements Serializable {
     private Item selectedItem;
     
     private Integer tabActiveIndex;
+    private Boolean addProcessNodeToItemNode = Boolean.TRUE;
 
     public String saveBillMaterials() {
         try {
@@ -181,8 +189,31 @@ public class BillMaterialsPresenter implements Serializable {
     public String saveNode() {
         selectedItem = null;
         selectedProcess = null;
-        if (node.getFather() == null)
+        if (node.getFather() == null) {
             insertIntoTree();
+            if (node instanceof ItemNode && addProcessNodeToItemNode) {
+                Process linkedProcess = ((ItemNode)node).getItem().getProcess();
+                if (linkedProcess == null) {
+                    List<Process> processes = processService.listProcesses(((ItemNode)node).getItem().getName(), true);
+                    if (processes == null || processes.isEmpty()) {
+                        linkedProcess = new Process(((ItemNode)node).getItem().getName());
+                        linkedProcess.setStandardCost(new BigDecimal(node.getPrice().doubleValue()));
+                        processService.saveProcess(linkedProcess);
+                    }
+                    else
+                        linkedProcess = processService.listProcesses(((ItemNode)node).getItem().getName(), true).get(0);
+                    ((ItemNode)node).getItem().setProcess(linkedProcess);
+                    itemService.saveItem(((ItemNode)node).getItem());
+                }
+                ProcessNode processNode = new ProcessNode();
+                processNode.setFather(node.getFather());
+                processNode.setPrice(new BigDecimal(linkedProcess.getStandardCost().doubleValue()));
+                processNode.setQty(new BigDecimal(node.getQty().doubleValue()));
+                processNode.setProcess(linkedProcess);
+                node = processNode;
+                insertIntoTree();
+            }
+        }
         
         return "openBillMaterials";
     }
@@ -305,6 +336,14 @@ public class BillMaterialsPresenter implements Serializable {
 
     public void setTabActiveIndex(Integer tabActiveIndex) {
         this.tabActiveIndex = tabActiveIndex;
+    }
+
+    public Boolean getAddProcessNodeToItemNode() {
+        return addProcessNodeToItemNode;
+    }
+
+    public void setAddProcessNodeToItemNode(Boolean addProcessNodeToItemNode) {
+        this.addProcessNodeToItemNode = addProcessNodeToItemNode;
     }
     
 }

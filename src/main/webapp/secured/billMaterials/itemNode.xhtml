@@ -56,11 +56,15 @@
                 </p:dataTable>
                 
                 <bnu:row>
-                    <bnu:column>
+                    <bnu:column colSm="8">
                         <h:outputLabel for="description" value="#{msg.billMaterials_itemNode_selected}"/>
                         <bnu:message for="description"/>
                         <h:outputText id="description" value="#{billMaterialsPresenter.node.description}"/>
                     </bnu:column>
+                    <bnu:switch value="#{billMaterialsPresenter.addProcessNodeToItemNode}"
+                                label="#{msg.billMaterials_itemNode_addProcess}" render-label="true"
+                                tooltip="#{msg.billMaterials_itemNode_addProcess_tip}"
+                                colSm="4"/>
                 </bnu:row>
                 <ui:include src="commonNodeFieldsTemplate.xhtml"/>
             </h:form>
