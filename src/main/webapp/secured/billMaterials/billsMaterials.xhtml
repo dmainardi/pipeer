@@ -31,23 +31,23 @@
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_revision}" filterBy="#{bill.revision}" sortBy="#{bill.revision}" styleClass="centeredColumn" priority="1">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_revision}" filterBy="#{bill.revision}" sortBy="#{bill.revision}" styleClass="centeredColumn" priority="4">
                         <h:outputText value="#{bill.revision}">
                             <f:convertNumber integerOnly="true"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="#{msg.customerSupplier_customer}" priority="2">
+                    <p:column headerText="#{msg.customerSupplier_customer}" priority="3">
                         <h:outputText value="#{bill.plant.customerSupplier.name}"/>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_creationDate}" filterBy="#{bill.creationDate}" sortBy="#{bill.creationDate}" styleClass="centeredColumn" priority="1">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_creationDate}" filterBy="#{bill.creationDate}" sortBy="#{bill.creationDate}" styleClass="centeredColumn" priority="5">
                         <h:outputText value="#{bill.creationDate}">
                             <f:convertDateTime pattern="dd/MM/YYYY" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_name}" filterBy="#{bill.name}" sortBy="#{bill.name}" priority="2">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_name}" filterBy="#{bill.name}" sortBy="#{bill.name}" priority="6">
                         <h:outputText value="#{bill.name}"/>
                     </p:column>
-                    <p:column headerText="#{msg.billMaterials_billMaterials_totalCost}" styleClass="rightedColumn" priority="2">
+                    <p:column headerText="#{msg.billMaterials_billMaterials_totalCost}" styleClass="rightedColumn" priority="6">
                         <h:outputText value="#{bill.root.total}">
                             <f:convertNumber type="currency" currencySymbol="€ "/>
                         </h:outputText>
