@@ -77,6 +77,10 @@
         <param-value>javax.ejb.EJBException,javax.persistence.RollbackException</param-value>
     </context-param>
     <error-page>
+        <error-code>403</error-code>
+        <location>/faces/error/403.xhtml</location>
+    </error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/faces/error/404.xhtml</location>
     </error-page>
