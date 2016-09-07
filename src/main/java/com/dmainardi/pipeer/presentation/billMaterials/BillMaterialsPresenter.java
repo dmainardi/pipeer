@@ -103,6 +103,7 @@ public class BillMaterialsPresenter implements Serializable {
                 customer = billMaterials.getPlant().getCustomerSupplier();
             }
             id = null;
+            populateTree();
         }
     }
     
@@ -298,7 +299,6 @@ public class BillMaterialsPresenter implements Serializable {
     }
 
     public TreeNode getRoot() {
-        populateTree();
         return root;
     }
 
